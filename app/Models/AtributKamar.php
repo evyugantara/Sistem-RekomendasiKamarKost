@@ -15,25 +15,19 @@ class AtributKamar extends Model
         'opsi_kriteria_id',
     ];
 
-    /**
-     * Relasi ke Kamar
-     */
+    
     public function kamar(): BelongsTo
     {
         return $this->belongsTo(Kamar::class, 'kamar_id');
     }
 
-    /**
-     * Relasi ke Kriteria
-     */
+    
     public function kriteria(): BelongsTo
     {
         return $this->belongsTo(Kriteria::class, 'kriteria_id');
     }
 
-    /**
-     * Relasi ke Opsi Kriteria
-     */
+    
     public function opsiKriteria(): BelongsTo
     {
         return $this->belongsTo(OpsiKriteria::class, 'opsi_kriteria_id');

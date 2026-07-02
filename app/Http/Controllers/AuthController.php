@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $user = Auth::user();
 
-            // Cek jika akun dinonaktifkan oleh Admin
+            
             if ($user->status === 'inactive') {
                 Auth::logout();
                 throw ValidationException::withMessages([
@@ -38,7 +38,7 @@ class AuthController extends Controller
                 ]);
             }
 
-            // Cek jika akun masih dalam proses verifikasi (pending)
+            
             if ($user->status === 'pending') {
                 Auth::logout();
                 return redirect()->route('pending')->with('warning_pending', 'Akun Anda sedang dalam proses verifikasi. Silakan tunggu persetujuan dari Administrator.');
@@ -117,7 +117,7 @@ class AuthController extends Controller
             'kost_longitude' => 'required|numeric',
         ]);
 
-        // Upload berkas KTP
+        
         $ktpFileName = null;
         if ($request->hasFile('ktp_file')) {
             $file = $request->file('ktp_file');
@@ -125,7 +125,7 @@ class AuthController extends Controller
             $file->move(public_path('uploads/ktp'), $ktpFileName);
         }
 
-        // Upload berkas Foto Kost Utama
+        
         $kostImageName = null;
         if ($request->hasFile('kost_image')) {
             $file = $request->file('kost_image');
@@ -133,7 +133,7 @@ class AuthController extends Controller
             $file->move(public_path('uploads/kost'), $kostImageName);
         }
 
-        // Simpan data User (status pending)
+        
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
@@ -143,7 +143,7 @@ class AuthController extends Controller
             'status' => 'pending', 
         ]);
 
-        // Simpan profil pengelola
+        
         ProfilPengelola::create([
             'user_id' => $user->id,
             'ktp_number' => $request->ktp_number,
@@ -152,11 +152,11 @@ class AuthController extends Controller
             'ktp_file' => 'uploads/ktp/' . $ktpFileName,
         ]);
 
-        // Ambil default Kampus (Pertama di DB) untuk relasi kost
+        
         $defaultCampus = \App\Models\Kampus::first();
         $kampusId = $defaultCampus ? $defaultCampus->id : 1;
 
-        // Buat entri Kost Draft Awal
+        
         $kost = \App\Models\Kost::create([
             'user_id' => $user->id,
             'kampus_id' => $kampusId,
@@ -168,7 +168,7 @@ class AuthController extends Controller
             'description' => 'Draft kost diajukan saat registrasi.',
         ]);
 
-        // Simpan foto kost utama ke tabel foto_kost
+        
         if ($kostImageName) {
             \App\Models\FotoKost::create([
                 'kost_id' => $kost->id,

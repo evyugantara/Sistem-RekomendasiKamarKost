@@ -21,9 +21,7 @@ use Illuminate\Support\Facades\File;
 
 class PengelolaController extends Controller
 {
-    /**
-     * Dashboard Pengelola Kost
-     */
+    
     public function dashboard()
     {
         $user = Auth::user();
@@ -32,12 +30,12 @@ class PengelolaController extends Controller
         
         $totalKosts = $kosts->count();
         
-        // Hitung metrik unit kamar
+        
         $totalKamars = Kamar::whereIn('kost_id', $kostIds)->count();
         $kamarTersedia = Kamar::whereIn('kost_id', $kostIds)->where('status', 'tersedia')->count();
         $kamarTerisi = Kamar::whereIn('kost_id', $kostIds)->where('status', 'terisi')->count();
 
-        // Riwayat kontak terakhir (untuk tabel riwayat bawah)
+        
         $kamarIds = Kamar::whereIn('kost_id', $kostIds)->pluck('id')->toArray();
         $recentContacts = LogKontak::with(['user.profilMahasiswa', 'kamar.kost'])
             ->whereIn('kamar_id', $kamarIds)
@@ -55,9 +53,7 @@ class PengelolaController extends Controller
         ));
     }
 
-    /**
-     * Tampilkan Form Profil Pengelola
-     */
+    
     public function profil()
     {
         $user = Auth::user();
@@ -65,9 +61,7 @@ class PengelolaController extends Controller
         return view('pengelola.profil', compact('user', 'profil'));
     }
 
-    /**
-     * Update Profil Pengelola
-     */
+    
     public function updateProfil(Request $request)
     {
         $user = Auth::user();
@@ -82,7 +76,7 @@ class PengelolaController extends Controller
             'address' => 'required|string',
         ]);
 
-        // Update core User
+        
         $user->name = $request->name;
         $user->email = $request->email;
         if ($request->filled('password')) {
@@ -90,7 +84,7 @@ class PengelolaController extends Controller
         }
         $user->save();
 
-        // Update Profil Pengelola
+        
         if (!$profil) {
             $profil = new ProfilPengelola();
             $profil->user_id = $user->id;
@@ -103,9 +97,7 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.profil')->with('success', 'Profil Anda berhasil diperbarui!');
     }
 
-    /**
-     * Daftar Kost Milik Pengelola
-     */
+    
     public function kost()
     {
         $user = Auth::id();
@@ -113,9 +105,7 @@ class PengelolaController extends Controller
         return view('pengelola.kost.index', compact('kosts'));
     }
 
-    /**
-     * Form Tambah Kost Baru
-     */
+    
     public function tambahKost()
     {
         $campuses = Kampus::all();
@@ -125,9 +115,7 @@ class PengelolaController extends Controller
         return view('pengelola.kost.tambah', compact('campuses'));
     }
 
-    /**
-     * Simpan Kost Baru ke Database
-     */
+    
     public function simpanKost(Request $request)
     {
         $request->validate([
@@ -154,9 +142,7 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost')->with('success', 'Kost baru berhasil ditambahkan! Silakan lengkapi fasilitas dan foto kost.');
     }
 
-    /**
-     * Form Edit Data Kost
-     */
+    
     public function editKost($id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
@@ -164,9 +150,7 @@ class PengelolaController extends Controller
         return view('pengelola.kost.edit', compact('kost', 'campuses'));
     }
 
-    /**
-     * Simpan Pembaruan Data Kost
-     */
+    
     public function updateKost(Request $request, $id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
@@ -194,14 +178,12 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost')->with('success', 'Data kost berhasil diperbarui!');
     }
 
-    /**
-     * Hapus Kost beserta Relasinya
-     */
+    
     public function hapusKost($id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
         
-        // Hapus file foto dari storage lokal sebelum menghapus record database
+        
         foreach ($kost->fotos as $foto) {
             $filePath = public_path($foto->image_path);
             if (File::exists($filePath)) {
@@ -214,19 +196,17 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost')->with('success', 'Kost berhasil dihapus dari sistem.');
     }
 
-    /**
-     * Form Kelola Fasilitas / Atribut Kost
-     */
+    
     public function fasilitas($id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
         
-        // Ambil opsi kriteria yang saat ini aktif pada kost ini
+        
         $currentAttrs = AtributKost::where('kost_id', $kost->id)
             ->pluck('opsi_kriteria_id')
             ->toArray();
 
-        // Ambil semua kriteria yang dikelompokkan berdasarkan kategori
+        
         $kriterias = Kriteria::with('opsiKriteria')->get();
         
         $kriteriaUmum = $kriterias->where('category', 'umum');
@@ -236,17 +216,15 @@ class PengelolaController extends Controller
         return view('pengelola.kost.fasilitas', compact('kost', 'kriteriaUmum', 'kriteriaPribadi', 'kriteriaBersama', 'currentAttrs'));
     }
 
-    /**
-     * Simpan Fasilitas / Atribut Kost
-     */
+    
     public function simpanFasilitas(Request $request, $id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
         
-        // Opsi dikirim dalam format array input: attrs[kriteria_id] = [opsi_kriteria_id1, opsi_kriteria_id2, ...]
+        
         $attrs = $request->input('attrs', []);
 
-        // Hapus atribut lama
+        
         AtributKost::where('kost_id', $kost->id)->delete();
 
         $savedCount = 0;
@@ -277,18 +255,14 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost')->with('success', 'Fasilitas & atribut kost berhasil diperbarui! (' . $savedCount . ' kriteria diterapkan)');
     }
 
-    /**
-     * Halaman Kelola Galeri Foto Kost
-     */
+    
     public function fotos($id)
     {
         $kost = Kost::with('fotos')->where('user_id', Auth::id())->findOrFail($id);
         return view('pengelola.kost.foto', compact('kost'));
     }
 
-    /**
-     * Simpan Foto Baru
-     */
+    
     public function simpanFoto(Request $request, $id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
@@ -301,7 +275,7 @@ class PengelolaController extends Controller
             $image = $request->file('image');
             $fileName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
             
-            // Buat folder uploads jika belum ada
+            
             $destPath = public_path('uploads/kosts');
             if (!File::isDirectory($destPath)) {
                 File::makeDirectory($destPath, 0755, true, true);
@@ -310,7 +284,7 @@ class PengelolaController extends Controller
             $image->move($destPath, $fileName);
             $relativePath = 'uploads/kosts/' . $fileName;
 
-            // Jika ini foto pertama, set sebagai foto utama (is_primary = true)
+            
             $isPrimary = FotoKost::where('kost_id', $kost->id)->count() === 0;
 
             FotoKost::create([
@@ -325,15 +299,13 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost.fotos', $kost->id)->with('error', 'Terjadi kesalahan saat mengunggah foto.');
     }
 
-    /**
-     * Hapus Foto dari Kost
-     */
+    
     public function hapusFoto($id, $fotoId)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
         $foto = FotoKost::where('kost_id', $kost->id)->findOrFail($fotoId);
 
-        // Hapus file fisik
+        
         $filePath = public_path($foto->image_path);
         if (File::exists($filePath)) {
             File::delete($filePath);
@@ -342,7 +314,7 @@ class PengelolaController extends Controller
         $wasPrimary = $foto->is_primary;
         $foto->delete();
 
-        // Jika foto yang dihapus adalah foto utama, set foto lainnya sebagai foto utama
+        
         if ($wasPrimary) {
             $nextFoto = FotoKost::where('kost_id', $kost->id)->first();
             if ($nextFoto) {
@@ -353,26 +325,22 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost.fotos', $kost->id)->with('success', 'Foto berhasil dihapus.');
     }
 
-    /**
-     * Set Foto sebagai Foto Utama
-     */
+    
     public function setFotoUtama($id, $fotoId)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($id);
         
-        // Set semua foto kost ini menjadi false
+        
         FotoKost::where('kost_id', $kost->id)->update(['is_primary' => false]);
 
-        // Set foto terpilih menjadi true
+        
         $foto = FotoKost::where('kost_id', $kost->id)->findOrFail($fotoId);
         $foto->update(['is_primary' => true]);
 
         return redirect()->route('pengelola.kost.fotos', $kost->id)->with('success', 'Foto utama berhasil diubah.');
     }
 
-    /**
-     * Tampilkan Daftar Kamar Kost
-     */
+    
     public function kamar($kost_id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($kost_id);
@@ -380,22 +348,18 @@ class PengelolaController extends Controller
         return view('pengelola.kost.kamar.index', compact('kost', 'kamars'));
     }
 
-    /**
-     * Form Tambah Kamar Baru
-     */
+    
     public function tambahKamar($kost_id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($kost_id);
         
-        // Ambil kriteria kategori pribadi untuk diisi di tingkat kamar
+        
         $kriterias = Kriteria::with('opsiKriteria')->where('category', 'pribadi')->get();
         
         return view('pengelola.kost.kamar.tambah', compact('kost', 'kriterias'));
     }
 
-    /**
-     * Simpan Kamar Baru ke Database
-     */
+    
     public function simpanKamar(Request $request, $kost_id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($kost_id);
@@ -425,7 +389,7 @@ class PengelolaController extends Controller
             'image_path' => $imagePath,
         ]);
 
-        // Simpan Fasilitas Pribadi (Atribut Kamar) - format array checkbox
+        
         if ($request->filled('fasilitas')) {
             foreach ($request->fasilitas as $kriteriaId => $opsiIds) {
                 if (is_array($opsiIds)) {
@@ -453,26 +417,22 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost.kamar', $kost->id)->with('success', 'Kamar baru berhasil ditambahkan!');
     }
 
-    /**
-     * Form Edit Data Kamar
-     */
+    
     public function editKamar($kost_id, $id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($kost_id);
         $kamar = Kamar::where('kost_id', $kost->id)->findOrFail($id);
 
-        // Ambil kriteria kategori pribadi
+        
         $kriterias = Kriteria::with('opsiKriteria')->where('category', 'pribadi')->get();
 
-        // Ambil atribut kamar yang aktif
+        
         $activeOpts = AtributKamar::where('kamar_id', $kamar->id)->pluck('opsi_kriteria_id')->toArray();
 
         return view('pengelola.kost.kamar.edit', compact('kost', 'kamar', 'kriterias', 'activeOpts'));
     }
 
-    /**
-     * Update Data Kamar
-     */
+    
     public function updateKamar(Request $request, $kost_id, $id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($kost_id);
@@ -488,7 +448,7 @@ class PengelolaController extends Controller
 
         $imagePath = $kamar->image_path;
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
+            
             if ($imagePath && File::exists(public_path($imagePath))) {
                 File::delete(public_path($imagePath));
             }
@@ -507,10 +467,10 @@ class PengelolaController extends Controller
             'image_path' => $imagePath,
         ]);
 
-        // Hapus atribut lama
+        
         AtributKamar::where('kamar_id', $kamar->id)->delete();
 
-        // Simpan atribut baru - format array checkbox
+        
         if ($request->filled('fasilitas')) {
             foreach ($request->fasilitas as $kriteriaId => $opsiIds) {
                 if (is_array($opsiIds)) {
@@ -538,15 +498,13 @@ class PengelolaController extends Controller
         return redirect()->route('pengelola.kost.kamar', $kost->id)->with('success', 'Data kamar berhasil diperbarui!');
     }
 
-    /**
-     * Hapus Kamar
-     */
+    
     public function hapusKamar($kost_id, $id)
     {
         $kost = Kost::where('user_id', Auth::id())->findOrFail($kost_id);
         $kamar = Kamar::where('kost_id', $kost->id)->findOrFail($id);
 
-        // Hapus gambar fisik jika ada
+        
         if ($kamar->image_path && File::exists(public_path($kamar->image_path))) {
             File::delete(public_path($kamar->image_path));
         }

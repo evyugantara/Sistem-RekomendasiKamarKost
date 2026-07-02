@@ -15,7 +15,7 @@
             @csrf
             
             <div class="grid-2">
-                <!-- Data Akun -->
+                
                 <div>
                     <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px; font-weight: 600; color: #555;">
                         <i class="fa-solid fa-key"></i> Data Akun & Akses
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 
-                <!-- Data Mahasiswa -->
+                
                 <div>
                     <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px; font-weight: 600; color: #555;">
                         <i class="fa-solid fa-graduation-cap"></i> Data Akademik & Kontak

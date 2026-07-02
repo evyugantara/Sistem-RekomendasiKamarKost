@@ -7,8 +7,8 @@
 @section('styles')
 <style>
     .check-card {
-        background: #fff;
-        border: 1px solid #e2e8f0;
+        background: 
+        border: 1px solid 
         border-radius: 8px;
         padding: 12px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.02);
@@ -16,9 +16,9 @@
     .check-card strong {
         display: block;
         font-size: 13px;
-        color: #0f172a;
+        color: 
         margin-bottom: 10px;
-        border-bottom: 1px solid #f1f5f9;
+        border-bottom: 1px solid 
         padding-bottom: 5px;
     }
     .check-item {
@@ -30,13 +30,13 @@
     .check-item input[type="checkbox"] {
         width: 16px; height: 16px;
         cursor: pointer;
-        accent-color: #3c8dbc;
+        accent-color: 
     }
     .check-item label {
         margin-bottom: 0;
         font-size: 13px;
         font-weight: 500;
-        color: #334155;
+        color: 
         cursor: pointer;
     }
 </style>
@@ -48,7 +48,7 @@
     
     <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 20px; align-items: start;">
 
-        <!-- KOLOM KIRI: Informasi Dasar Kamar -->
+        
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa-solid fa-edit"></i> Informasi Kamar</h3>
@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <!-- KOLOM KANAN: Fasilitas Kamar (Checkbox Grid) -->
+        
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa-solid fa-list-check"></i> Fasilitas Kamar (Pribadi)</h3>

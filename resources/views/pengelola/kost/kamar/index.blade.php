@@ -77,12 +77,12 @@
                         </td>
                         <td style="text-align: center;">
                             <div style="display: flex; gap: 5px; justify-content: center;">
-                                <!-- Edit Kamar -->
+                                
                                 <a href="{{ route('pengelola.kost.kamar.edit', [$kost->id, $kamar->id]) }}" class="btn-custom btn-primary-custom btn-xs" style="padding: 5px 10px;">
                                     <i class="fa-solid fa-edit"></i> Edit
                                 </a>
                                 
-                                <!-- Hapus Kamar -->
+                                
                                 <form action="{{ route('pengelola.kost.kamar.hapus', [$kost->id, $kamar->id]) }}" method="post" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data kamar ini secara permanen?')" style="display: inline;">
                                     @csrf
                                     <button type="submit" class="btn-custom btn-danger-custom btn-xs" style="padding: 5px 10px;">

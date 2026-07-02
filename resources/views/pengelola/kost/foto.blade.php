@@ -15,7 +15,7 @@
     
     <div class="box-body">
         <div class="grid-2" style="grid-template-columns: 1fr 1.5fr; gap: 20px;">
-            <!-- Upload Foto Baru -->
+            
             <div style="background-color: #fcfcfc; border: 1px solid #ddd; padding: 20px; border-radius: 4px; height: fit-content;">
                 <h4 style="font-weight: 700; font-size: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px; color: #555;">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Unggah Foto Baru
@@ -36,7 +36,7 @@
                 </form>
             </div>
             
-            <!-- Daftar Foto Aktif -->
+            
             <div>
                 <h4 style="font-weight: 700; font-size: 15px; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px; color: #555;">
                     <i class="fa-solid fa-photo-film"></i> Daftar Foto Diunggah ({{ $kost->fotos->count() }})

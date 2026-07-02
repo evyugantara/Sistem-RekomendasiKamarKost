@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class KostController extends Controller
 {
-    /**
-     * Tampilkan Landing Page dan Daftar Kost (Akses Guest & Umum)
-     */
+    
     public function index(Request $request)
     {
         $query = Kost::with(['fotos', 'kampus', 'atributKost.opsiKriteria', 'kamars'])
@@ -23,7 +21,7 @@ class KostController extends Controller
                 $q->where('status', 'active');
             });
 
-        // Filter Pencarian Nama / Alamat
+        
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -32,15 +30,15 @@ class KostController extends Controller
             });
         }
 
-        // Filter Jenis Kost (Putra, Putri, Campur) melalui relasi atribut_kost
+        
         if ($request->filled('jenis')) {
-            $jenisVal = $request->jenis; // 'Putra', 'Putri', 'Campur'
+            $jenisVal = $request->jenis; 
             $query->whereHas('atributKost.opsiKriteria', function($q) use ($jenisVal) {
                 $q->where('value', $jenisVal);
             });
         }
 
-        // Filter Rentang Harga
+        
         if ($request->filled('harga')) {
             $hargaRange = $request->harga;
             if ($hargaRange === 'under_500') {
@@ -67,13 +65,13 @@ class KostController extends Controller
             })
             ->findOrFail($id);
         
-        // Dapatkan kampus acuan
+        
         $kampus = $kost->kampus;
 
-        // Ambil semua kamar untuk detail kost
+        
         $kamars = $kost->kamars;
 
-        // Tentukan kamar mana yang sedang di-highlight
+        
         $highlightedKamarId = $request->query('kamar');
         $highlightedKamar = null;
         if ($highlightedKamarId) {
@@ -83,7 +81,7 @@ class KostController extends Controller
             $highlightedKamar = $kamars->first();
         }
 
-        // Kelompokkan atribut kost berdasarkan kategori (umum dan bersama)
+        
         $atributUmum = [];
         $atributBersama = [];
 
@@ -99,7 +97,7 @@ class KostController extends Controller
             }
         }
 
-        // Kelompokkan atribut kamar (pribadi)
+        
         $atributPribadi = [];
         if ($highlightedKamar) {
             foreach ($highlightedKamar->atributKamar as $attr) {
@@ -109,7 +107,7 @@ class KostController extends Controller
             }
         }
 
-        // Cek jika mahasiswa sudah memfavoritkan kamar terpilih ini
+        
         $isFavorit = false;
         if (Auth::check() && Auth::user()->role === 'mahasiswa' && $highlightedKamar) {
             $isFavorit = KamarFavorit::where('user_id', Auth::id())->where('kamar_id', $highlightedKamar->id)->exists();

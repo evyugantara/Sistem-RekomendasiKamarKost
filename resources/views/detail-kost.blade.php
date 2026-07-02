@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $kost->name }} - Detail Kost</title>
 
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Leaflet.js -->
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLEo=" crossorigin=""></script>
 
-    <!-- Custom Style CSS -->
+    
     <link rel="stylesheet" href="{{ asset('css/dashboard-style.css') }}?v={{ time() }}">
 
-    <!-- SweetAlert2 -->
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        /* ===== LAYOUT ===== */
+        
         .detail-wrapper {
             max-width: 1180px;
             margin: 28px auto;
@@ -30,10 +30,10 @@
             align-items: start;
         }
 
-        /* ===== CARD ===== */
+        
         .detail-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
+            background: 
+            border: 1px solid 
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
@@ -41,27 +41,27 @@
         }
         .detail-card-header {
             padding: 12px 16px;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid 
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #fafbfc;
+            background: 
         }
         .detail-card-header h3 {
             margin: 0;
             font-size: 14px;
             font-weight: 700;
-            color: #334155;
+            color: 
         }
         .detail-card-header i {
-            color: #3c8dbc;
+            color: 
             font-size: 14px;
         }
         .detail-card-body {
             padding: 16px;
         }
 
-        /* ===== FOTO GALERI ===== */
+        
         .kost-main-img {
             width: 100%;
             height: 280px;
@@ -73,8 +73,8 @@
             display: flex;
             gap: 8px;
             padding: 10px 12px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
+            background: 
+            border-top: 1px solid 
             overflow-x: auto;
         }
         .kost-thumbs img {
@@ -87,23 +87,23 @@
             transition: border-color 0.2s;
             flex-shrink: 0;
         }
-        .kost-thumbs img:hover { border-color: #3c8dbc; }
+        .kost-thumbs img:hover { border-color: 
 
-        /* ===== KAMAR CARD ===== */
+        
         .kamar-item {
             display: flex;
             gap: 12px;
             padding: 12px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid 
             border-radius: 8px;
-            background: #fff;
+            background: 
             transition: all 0.2s;
             margin-bottom: 10px;
         }
         .kamar-item:last-child { margin-bottom: 0; }
         .kamar-item.active {
-            border-color: #3c8dbc;
-            background: #f0f7fd;
+            border-color: 
+            background: 
             box-shadow: 0 0 0 3px rgba(60,141,188,0.12);
         }
         .kamar-thumb {
@@ -112,55 +112,55 @@
             border-radius: 6px;
             object-fit: cover;
             flex-shrink: 0;
-            border: 1px solid #e2e8f0;
+            border: 1px solid 
         }
         .kamar-info { flex: 1; }
         .kamar-name {
             font-size: 15px;
             font-weight: 700;
-            color: #1e293b;
+            color: 
             margin: 0 0 4px 0;
         }
         .kamar-price {
             font-size: 15px;
             font-weight: 700;
-            color: #16a34a;
+            color: 
         }
-        .kamar-price span { font-size: 11px; font-weight: 400; color: #64748b; }
+        .kamar-price span { font-size: 11px; font-weight: 400; color: 
         .kamar-attr-tag {
             display: inline-block;
             font-size: 10.5px;
-            background: #f1f5f9;
-            color: #475569;
+            background: 
+            color: 
             padding: 2px 7px;
             border-radius: 99px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid 
             margin: 2px 2px 0 0;
         }
 
-        /* ===== PETA ===== */
+        
         .map-info-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f0f7fd;
-            border: 1px solid #bfdbfe;
+            background: 
+            border: 1px solid 
             border-radius: 7px;
             padding: 10px 14px;
             margin-bottom: 12px;
             font-size: 13px;
-            color: #334155;
+            color: 
         }
         .map-distance {
             font-weight: 700;
-            color: #3c8dbc;
+            color: 
             font-size: 15px;
         }
-        #kostMap {
+        
             width: 100%;
             height: 260px;
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid 
         }
         .map-btn-group {
             display: grid;
@@ -170,135 +170,135 @@
         }
         .btn-map-blue {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #4285F4; color: #fff !important;
+            background: 
             padding: 11px 12px; border-radius: 7px;
             font-size: 13px; font-weight: 600;
             text-decoration: none;
             transition: all 0.2s;
             box-shadow: 0 1px 4px rgba(66,133,244,0.3);
         }
-        .btn-map-blue:hover { background: #3472d8; transform: translateY(-1px); text-decoration: none; }
+        .btn-map-blue:hover { background: 
         .btn-map-green {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #16a34a; color: #fff !important;
+            background: 
             padding: 11px 12px; border-radius: 7px;
             font-size: 13px; font-weight: 600;
             text-decoration: none;
             transition: all 0.2s;
             box-shadow: 0 1px 4px rgba(22,163,74,0.3);
         }
-        .btn-map-green:hover { background: #15803d; transform: translateY(-1px); text-decoration: none; }
+        .btn-map-green:hover { background: 
 
-        /* ===== STICKY PANEL KANAN ===== */
+        
         .sticky-panel {
             position: sticky;
             top: 76px;
         }
 
-        /* ===== NAMA & HARGA ===== */
+        
         .kost-title-panel {
             padding: 18px 16px 14px;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid 
         }
         .kost-title-panel h1 {
             font-size: 20px;
             font-weight: 800;
-            color: #0f172a;
+            color: 
             margin: 0 0 6px 0;
             line-height: 1.3;
         }
         .kost-address-small {
             font-size: 12.5px;
-            color: #64748b;
+            color: 
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
-        /* Kamar Terpilih box */
+        
         .selected-kamar-box {
             margin: 12px 16px;
             padding: 10px 14px;
             border-radius: 8px;
-            border-left: 4px solid #3c8dbc;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-left: 4px solid #3c8dbc;
+            border-left: 4px solid 
+            background: 
+            border: 1px solid 
+            border-left: 4px solid 
         }
         .selected-kamar-label {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            color: #64748b;
+            color: 
             display: block;
             margin-bottom: 3px;
         }
         .selected-kamar-name {
             font-size: 16px;
             font-weight: 700;
-            color: #1d4ed8;
+            color: 
             display: block;
         }
 
-        /* Harga box */
+        
         .price-display-box {
             margin: 0 16px 14px;
             padding: 12px 14px;
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border: 1px solid #86efac;
+            background: linear-gradient(135deg, 
+            border: 1px solid 
             border-radius: 8px;
         }
-        .price-label-sm { font-size: 11px; color: #64748b; display: block; margin-bottom: 2px; }
+        .price-label-sm { font-size: 11px; color: 
         .price-value-lg {
             font-size: 22px;
             font-weight: 800;
-            color: #15803d;
+            color: 
         }
-        .price-value-lg span { font-size: 12px; font-weight: 400; color: #64748b; }
+        .price-value-lg span { font-size: 12px; font-weight: 400; color: 
 
-        /* Tombol aksi */
+        
         .action-btns { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 8px; }
         .btn-wa {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #25d366; color: #fff !important;
+            background: 
             padding: 11px 16px; border-radius: 7px;
             font-size: 14px; font-weight: 700;
             text-decoration: none; border: none; cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-wa:hover { background: #1fba57; text-decoration: none; }
+        .btn-wa:hover { background: 
         .btn-telp {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #3c8dbc; color: #fff !important;
+            background: 
             padding: 11px 16px; border-radius: 7px;
             font-size: 14px; font-weight: 700;
             text-decoration: none; border: none; cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-telp:hover { background: #31729b; text-decoration: none; }
+        .btn-telp:hover { background: 
         .btn-fav {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #fff; color: #dc2626 !important;
+            background: 
             padding: 10px 16px; border-radius: 7px;
             font-size: 13.5px; font-weight: 600;
-            text-decoration: none; border: 1px solid #fca5a5; cursor: pointer;
+            text-decoration: none; border: 1px solid 
             transition: all 0.2s;
         }
-        .btn-fav:hover { background: #fff5f5; text-decoration: none; }
+        .btn-fav:hover { background: 
         .btn-fav-active {
-            background: #fef2f2; color: #dc2626 !important;
-            border: 1px solid #dc2626;
+            background: 
+            border: 1px solid 
         }
         .btn-disabled {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #f1f5f9; color: #94a3b8 !important;
+            background: 
             padding: 11px 16px; border-radius: 7px;
             font-size: 13.5px; font-weight: 600;
-            text-decoration: none; border: 1px solid #e2e8f0; cursor: not-allowed;
+            text-decoration: none; border: 1px solid 
         }
 
-        /* ===== SPESIFIKASI ===== */
+        
         .spec-section {
             margin-bottom: 14px;
         }
@@ -310,38 +310,38 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.6px;
-            color: #64748b;
+            color: 
             padding: 8px 16px;
-            background: #f8fafc;
-            border-top: 1px solid #f1f5f9;
-            border-bottom: 1px solid #f1f5f9;
+            background: 
+            border-top: 1px solid 
+            border-bottom: 1px solid 
         }
         .spec-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 7px 16px;
-            border-bottom: 1px solid #f8fafc;
+            border-bottom: 1px solid 
             font-size: 13px;
         }
         .spec-row:last-child { border-bottom: none; }
-        .spec-key { color: #64748b; }
-        .spec-val { font-weight: 600; color: #1e293b; text-align: right; max-width: 55%; }
+        .spec-key { color: 
+        .spec-val { font-weight: 600; color: 
         .badge-yes {
-            background: #dcfce7; color: #16a34a;
-            border: 1px solid #86efac;
+            background: 
+            border: 1px solid 
             padding: 2px 8px; border-radius: 99px;
             font-size: 11.5px; font-weight: 600;
         }
         .badge-no {
-            background: #fee2e2; color: #dc2626;
-            border: 1px solid #fca5a5;
+            background: 
+            border: 1px solid 
             padding: 2px 8px; border-radius: 99px;
             font-size: 11.5px; font-weight: 600;
         }
         .badge-neutral {
-            background: #f1f5f9; color: #475569;
-            border: 1px solid #e2e8f0;
+            background: 
+            border: 1px solid 
             padding: 2px 8px; border-radius: 99px;
             font-size: 11.5px; font-weight: 600;
         }
@@ -354,7 +354,7 @@
 </head>
 <body style="background-color: #f1f5f9;">
 
-    <!-- Navbar -->
+    
     <nav class="guest-navbar">
         <div class="brand">
             <i class="fa-solid fa-house-laptop" style="color:#3c8dbc;"></i> KOST MAHASISWA CBF
@@ -378,10 +378,10 @@
 
     <main class="detail-wrapper">
 
-        <!-- ===== KOLOM KIRI ===== -->
+        
         <div>
 
-            <!-- Galeri Foto -->
+            
             <div class="detail-card">
                 <img src="{{ asset($kost->fotoUtama()) }}" id="mainPhoto" class="kost-main-img" alt="{{ $kost->name }}">
                 @if($kost->fotos->count() > 1)
@@ -393,7 +393,7 @@
                 @endif
             </div>
 
-            <!-- Deskripsi -->
+            
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="fa-solid fa-file-lines"></i>
@@ -404,7 +404,7 @@
                 </div>
             </div>
 
-            <!-- Daftar Kamar -->
+            
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="fa-solid fa-bed"></i>
@@ -462,7 +462,7 @@
                 </div>
             </div>
 
-            <!-- Peta Lokasi -->
+            
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="fa-solid fa-map-location-dot"></i>
@@ -501,11 +501,11 @@
 
         </div>
 
-        <!-- ===== KOLOM KANAN (STICKY) ===== -->
+        
         <div class="sticky-panel">
             <div class="detail-card" style="margin-bottom:0;">
 
-                <!-- Judul Kost -->
+                
                 <div class="kost-title-panel">
                     <h1>{{ $kost->name }}</h1>
                     <p class="kost-address-small">
@@ -514,7 +514,7 @@
                     </p>
                 </div>
 
-                <!-- Kamar Terpilih -->
+                
                 @if($highlightedKamar)
                     <div style="padding: 12px 16px 0;">
                         <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#94a3b8; margin:0 0 3px 0;">Kamar Terpilih</p>
@@ -528,7 +528,7 @@
                     <hr style="border:none; border-top:1px solid #f1f5f9; margin: 12px 0 0 0;">
                 @endif
 
-                <!-- Harga -->
+                
                 <div style="padding: 12px 16px 10px;">
                     <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#94a3b8; margin:0 0 3px 0;">Harga Sewa per Bulan</p>
                     <p style="font-size:22px; font-weight:800; color:#1e293b; margin:0;">
@@ -538,7 +538,7 @@
                 </div>
                 <hr style="border:none; border-top:1px solid #f1f5f9; margin: 0;">
 
-                <!-- Tombol Aksi -->
+                
                 <div class="action-btns">
                     @auth
                         @if(auth()->user()->role === 'mahasiswa')
@@ -566,10 +566,10 @@
                     @endauth
                 </div>
 
-                <!-- ===== SPESIFIKASI ===== -->
+                
                 <div style="border-top: 2px solid #f1f5f9; margin-top: 4px;">
 
-                    <!-- Kriteria Umum -->
+                    
                     <div class="spec-section">
                         <div class="spec-section-header">
                             <i class="fa-solid fa-sliders"></i> Kriteria Umum
@@ -588,7 +588,7 @@
                         </div>
                     </div>
 
-                    <!-- Fasilitas Pribadi -->
+                    
                     <div class="spec-section">
                         <div class="spec-section-header">
                             <i class="fa-solid fa-bed"></i> Fasilitas Pribadi (Dalam Kamar)
@@ -603,7 +603,7 @@
                         @endforelse
                     </div>
 
-                    <!-- Fasilitas Bersama -->
+                    
                     <div class="spec-section" style="margin-bottom:0;">
                         <div class="spec-section-header">
                             <i class="fa-solid fa-users"></i> Fasilitas Bersama
@@ -625,7 +625,7 @@
 
     </main>
 
-    <!-- Footer -->
+    
     <footer style="background-color: #1e293b; color: #94a3b8; padding: 18px; text-align: center; font-size: 13px; margin-top: 30px;">
         &copy; 2026 Sistem Rekomendasi Kost Mahasiswa Berbasis Web &mdash; Content-Based Filtering (UNSUR)
     </footer>

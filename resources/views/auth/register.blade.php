@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun Baru - Sistem Rekomendasi Kost</title>
     
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Custom Style CSS -->
+    
     <link rel="stylesheet" href="{{ asset('css/dashboard-style.css') }}?v={{ time() }}">
 
-    <!-- Google Maps API -->
+    
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}"></script>
 </head>
 <body class="auth-wrapper" style="align-items: flex-start; padding-top: 50px; padding-bottom: 50px;">
@@ -22,7 +22,7 @@
         
         <p class="msg" style="margin-bottom: 10px;">Daftar akun baru untuk mulai menggunakan sistem</p>
         
-        <!-- Tab Pemilihan Peran -->
+        
         <div class="auth-tabs">
             <div class="auth-tab active" id="tabMahasiswa" onclick="switchForm('mahasiswa')">
                 <i class="fa-solid fa-user-graduate"></i> Mahasiswa
@@ -42,7 +42,7 @@
             </div>
         @endif
         
-        <!-- FORM REGISTRASI MAHASISWA -->
+        
         <div id="formMahasiswaContainer" class="auth-tab-content active">
             <form action="{{ route('register.mahasiswa') }}" method="post">
                 @csrf
@@ -99,7 +99,7 @@
             </form>
         </div>
         
-        <!-- FORM REGISTRASI PENGELOLA -->
+        
         <div id="formPengelolaContainer" class="auth-tab-content">
             <form action="{{ route('register.pengelola') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -152,7 +152,7 @@
                     </div>
                 </div>
 
-                <!-- Draft Data Kost Awal -->
+                
                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; margin-bottom: 10px;">
                     <h4 style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 3px;"><i class="fa-solid fa-house-chimney"></i> Draft Data Kost Awal</h4>
                     <p style="font-size: 11.5px; color: #64748b; margin-bottom: 8px;">Masukkan data detail kost Anda untuk melengkapi pengajuan awal.</p>
@@ -219,19 +219,19 @@
                 formP.classList.add('active');
                 formM.classList.remove('active');
                 
-                // Inisialisasi peta setelah tab aktif & kontainer terlihat
+                
                 setTimeout(function() {
                     initRegisterMap();
                 }, 150);
             }
         }
         
-        // Mempertahankan tab pengelola jika ada kesalahan validasi untuk pengelola
+        
         @if(old('ktp_number') || old('kost_name'))
             switchForm('pengelola');
         @endif
 
-        // --- Peta Google Maps Registrasi ---
+        
         let regMap;
         let regMarker;
 
@@ -241,14 +241,14 @@
                 return;
             }
 
-            // Koordinat pusat default: Cianjur (-6.81245000, 107.14090000)
+            
             const defaultLat = -6.81245000;
             const defaultLng = 107.14090000;
 
             const latInput = document.getElementById('kost_latitude');
             const lngInput = document.getElementById('kost_longitude');
 
-            // Set koordinat input default jika masih kosong
+            
             if (!latInput.value) {
                 latInput.value = defaultLat.toFixed(8);
             }
@@ -274,13 +274,13 @@
                 draggable: true
             });
 
-            // Perbarui input koordinat saat marker digeser (drag)
+            
             google.maps.event.addListener(regMarker, 'dragend', function (event) {
                 latInput.value = event.latLng.lat().toFixed(8);
                 lngInput.value = event.latLng.lng().toFixed(8);
             });
 
-            // Perbarui koordinat dan pin saat peta diklik
+            
             google.maps.event.addListener(regMap, 'click', function (event) {
                 const clickedLatLng = event.latLng;
                 regMarker.setPosition(clickedLatLng);

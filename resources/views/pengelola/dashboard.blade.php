@@ -12,9 +12,9 @@
     </div>
 </div>
 
-<!-- Row Metrik / KPI Cards -->
+
 <div class="metrics-row">
-    <!-- Card Total Kost -->
+    
     <div class="metric-card blue">
         <div class="inner">
             <h3>{{ $totalKosts }}</h3>
@@ -25,7 +25,7 @@
         </div>
     </div>
     
-    <!-- Card Total Kamar -->
+    
     <div class="metric-card green">
         <div class="inner">
             <h3>{{ $totalKamars }}</h3>
@@ -36,7 +36,7 @@
         </div>
     </div>
     
-    <!-- Card Kamar Tersedia -->
+    
     <div class="metric-card yellow">
         <div class="inner">
             <h3>{{ $kamarTersedia }}</h3>
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <!-- Card Kamar Terisi -->
+    
     <div class="metric-card red">
         <div class="inner">
             <h3>{{ $kamarTerisi }}</h3>
@@ -60,7 +60,7 @@
 </div>
 
 <div class="grid-2" style="grid-template-columns: 1.5fr 1fr; gap: 20px;">
-    <!-- Riwayat Mahasiswa Menghubungi -->
+    
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title"><i class="fa-solid fa-bell"></i> Riwayat Mahasiswa Menghubungi Kost Anda</h3>
@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    <!-- Pintasan Aksi Pengelola -->
+    
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title"><i class="fa-solid fa-rocket"></i> Menu Pintasan Cepat</h3>

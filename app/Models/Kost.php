@@ -21,49 +21,37 @@ class Kost extends Model
         'description',
     ];
 
-    /**
-     * Relasi ke Pengelola (User)
-     */
+    
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Relasi ke Kampus
-     */
+    
     public function kampus(): BelongsTo
     {
         return $this->belongsTo(Kampus::class, 'kampus_id');
     }
 
-    /**
-     * Relasi ke Foto Kost
-     */
+    
     public function fotos(): HasMany
     {
         return $this->hasMany(FotoKost::class, 'kost_id');
     }
 
-    /**
-     * Relasi ke Atribut/Spesifikasi Kost
-     */
+    
     public function atributKost(): HasMany
     {
         return $this->hasMany(AtributKost::class, 'kost_id');
     }
 
-    /**
-     * Relasi ke Kamar-kamar Kost
-     */
+    
     public function kamars(): HasMany
     {
         return $this->hasMany(Kamar::class, 'kost_id');
     }
 
-    /**
-     * Mendapatkan foto utama kost
-     */
+    
     public function fotoUtama()
     {
         $primary = $this->fotos()->where('is_primary', true)->first();

@@ -12,7 +12,7 @@
         padding: 12px 20px;
         font-weight: 700;
         font-size: 14px;
-        color: #64748b;
+        color: 
         cursor: pointer;
         transition: all 0.2s ease;
         border-bottom: 3px solid transparent;
@@ -22,11 +22,11 @@
         gap: 8px;
     }
     .tab-btn:hover {
-        color: #3c8dbc;
+        color: 
     }
     .tab-btn.active {
-        color: #3c8dbc;
-        border-bottom-color: #3c8dbc;
+        color: 
+        border-bottom-color: 
     }
     .tab-content {
         display: none;
@@ -36,8 +36,8 @@
         animation: fadeIn 0.2s ease;
     }
     .check-card {
-        background: #fff;
-        border: 1px solid #e2e8f0;
+        background: 
+        border: 1px solid 
         border-radius: 8px;
         padding: 12px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.01);
@@ -45,9 +45,9 @@
     .check-card strong {
         display: block;
         font-size: 13.5px;
-        color: #0f172a;
+        color: 
         margin-bottom: 10px;
-        border-bottom: 1px solid #f1f5f9;
+        border-bottom: 1px solid 
         padding-bottom: 5px;
     }
     .check-item {
@@ -60,21 +60,21 @@
         width: 16px;
         height: 16px;
         cursor: pointer;
-        accent-color: #3c8dbc;
+        accent-color: 
     }
     .check-item label {
         margin-bottom: 0;
         font-weight: 500;
         cursor: pointer;
         font-size: 13px;
-        color: #334155;
+        color: 
     }
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(4px); }
         to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Radar Scanner Animation */
+    
     .radar-container {
         position: relative;
         width: 84px;
@@ -100,7 +100,7 @@
         position: absolute;
         width: 50%;
         height: 3px;
-        background: linear-gradient(90deg, #0ea5e9, transparent);
+        background: linear-gradient(90deg, 
         top: 50%;
         left: 50%;
         transform-origin: 0 50%;
@@ -116,14 +116,14 @@
         to { transform: rotate(360deg); }
     }
     
-    /* Code Terminal Display */
+    
     .terminal-container {
-        background: #090d16;
-        border: 1px solid #1e293b;
+        background: 
+        border: 1px solid 
         border-radius: 8px;
         padding: 14px;
         font-family: 'Courier New', Courier, monospace;
-        color: #38bdf8;
+        color: 
         font-size: 12px;
         text-align: left;
         margin-bottom: 20px;
@@ -137,9 +137,9 @@
         justify-content: space-between;
     }
     .terminal-header {
-        color: #475569;
+        color: 
         font-weight: bold;
-        border-bottom: 1px solid #1e293b;
+        border-bottom: 1px solid 
         padding-bottom: 4px;
         margin-bottom: 8px;
         font-size: 11px;
@@ -149,7 +149,7 @@
 
 @section('content')
 
-<!-- PANEL PENGISIAN PREFERENSI (COLLAPSIBLE JIKA SUDAH ADA HASIL) -->
+
 <div class="box box-primary">
     <div class="box-header" style="cursor: pointer;" onclick="togglePreferenceForm()">
         <h3 class="box-title">
@@ -175,7 +175,7 @@
         <form action="{{ route('mahasiswa.preferensi.save') }}" method="post" id="preferenceForm">
             @csrf
             
-            <!-- Tab Navigation Buttons -->
+            
             <div style="display: flex; gap: 5px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px;">
                 <button type="button" class="tab-btn active" onclick="switchPrefTab(event, 'tab-umum')">
                     <i class="fa-solid fa-gears"></i> 1. Kriteria Umum
@@ -188,7 +188,7 @@
                 </button>
             </div>
             
-            <!-- Tab 1: Kriteria Umum -->
+            
             <div id="tab-umum" class="tab-content active">
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px;">
                     @foreach($kriteriaUmum as $k)
@@ -209,7 +209,7 @@
                 </div>
             </div>
             
-            <!-- Tab 2: Fasilitas Pribadi -->
+            
             <div id="tab-pribadi" class="tab-content">
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px;">
                     @foreach($kriteriaPribadi as $k)
@@ -230,7 +230,7 @@
                 </div>
             </div>
             
-            <!-- Tab 3: Fasilitas Bersama -->
+            
             <div id="tab-bersama" class="tab-content">
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px;">
                     @foreach($kriteriaBersama as $k)
@@ -258,7 +258,7 @@
             </div>
         </form>
 
-        <!-- OVERLAY LOADING HITUNG COSINE SIMILARITY (NATIVE ADMINLTE/BOOTSTRAP STYLE) -->
+        
         <div id="calcLoadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: center;">
             <div style="background: #ffffff; border: 1px solid #d2d6de; border-radius: 4px; padding: 25px 20px; width: 400px; max-width: 90%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); color: #333; text-align: left;">
                 
@@ -267,14 +267,14 @@
                     Mencari kost yang paling sesuai...
                 </h4>
                 
-                <!-- Native Bootstrap Progress Bar -->
+                
                 <div style="background: #f1f3f5; border: 1px solid #dee2e6; border-radius: 4px; height: 22px; overflow: hidden; width: 100%; margin-bottom: 12px;">
                     <div id="nativeProgressBar" style="width: 0%; height: 100%; background-color: #3c8dbc; color: #fff; font-size: 11px; font-weight: bold; text-align: center; line-height: 20px; transition: width 0.15s ease;">
                         0%
                     </div>
                 </div>
                 
-                <!-- Changing Status Text -->
+                
                 <div id="changingStatusText" style="font-size: 13px; color: #666; font-weight: 500; min-height: 18px; padding-left: 2px;">
                     Mengambil data kost...
                 </div>
@@ -284,7 +284,7 @@
     </div>
 </div>
 
-<!-- PANEL HASIL REKOMENDASI (DITAMPILKAN JIKA PREFERENSI SUDAH DIISI) -->
+
 @if($mahasiswaPrefs->isNotEmpty())
     <div class="box box-primary">
         <div class="box-header">
@@ -292,7 +292,7 @@
         </div>
         
         <div class="box-body">
-            <!-- Tampilan Ringkasan Preferensi Aktif -->
+            
             <div style="background-color: #fff8eb; border-left: 4px solid var(--card-yellow); padding: 12px 15px; border-radius: 3px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ffe8cc; border-left: 4px solid var(--card-yellow);">
                 <div style="font-size: 13.5px; line-height: 1.4; flex-grow: 1;">
                     <i class="fa-solid fa-info-circle" style="color: #f39c12;"></i> Preferensi Aktif Anda: <br>
@@ -319,7 +319,7 @@
                     <p style="color: #666; margin-top: 10px;">Tidak ada kost yang terdaftar di sistem saat ini.</p>
                 </div>
             @else
-                <!-- Loop Hasil Rekomendasi -->
+                
                 <div style="display: flex; flex-direction: column; gap: 15px;">
                     @foreach($recommendations as $index => $rec)
                         @php
@@ -330,15 +330,15 @@
                         @endphp
                         
                         <div style="background-color: #ffffff; border: 1px solid #d2d6de; border-top: 3px solid {{ $index === 0 ? 'var(--card-green)' : 'var(--primary-color)' }}; border-radius: 3px; display: flex; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                            <!-- Thumbnail Image -->
+                            
                             <div style="width: 200px; flex-shrink: 0; position: relative;">
                                 <img src="{{ asset($kamar->fotoKamar()) }}" alt="{{ $kamar->name }}" style="width: 100%; height: 100%; object-fit: cover; min-height: 150px;">
                                 <div style="position: absolute; top: 10px; left: 10px; background-color: rgba(0,0,0,0.7); color: #fff; padding: 3px 8px; border-radius: 3px; font-weight: bold; font-size: 13px;">
-                                    Rank #{{ $index + 1 }}
+                                    Rank 
                                 </div>
                             </div>
                             
-                            <!-- Body -->
+                            
                             <div style="padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                                 <div>
                                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
@@ -350,7 +350,7 @@
                                             <span style="font-size: 12px; color: #777;"><i class="fa fa-road"></i> {{ $kost->kampus->name }}</span>
                                         </div>
                                         
-                                        <!-- Similarity Badge -->
+                                        
                                         <div class="similarity-badge" style="border-color: {{ $index === 0 ? '#b2f2bb' : '#ffd8a8' }}; color: {{ $index === 0 ? '#2b8a3e' : '#d9480f' }}; background-color: {{ $index === 0 ? '#ebfbee' : '#fff8eb' }}; font-size: 13.5px; padding: 5px 10px;">
                                             <i class="fa-solid fa-circle-nodes"></i> {{ number_format($scorePercent, 1, ',', '.') }}% Cocok
                                         </div>
@@ -383,7 +383,7 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Actions -->
+                                
                                 <div style="border-top: 1px solid #eee; padding-top: 10px; display: flex; justify-content: flex-end; gap: 8px;">
                                     <button type="button" class="btn-custom btn-warning-custom btn-sm" onclick="showCalculationModal('calc_{{ $kamar->id }}')">
                                         <i class="fa-solid fa-list-check"></i> Detail Kecocokan Fasilitas
@@ -393,7 +393,7 @@
                             </div>
                         </div>
  
-                        <!-- MODAL DETAIL KECOCOKAN FASILITAS TANPA PERHITUNGAN MATEMATIKA -->
+                        
                         <div class="modal" id="calc_{{ $kamar->id }}">
                             <div class="modal-content" style="width: 600px; max-width: 95%;">
                                 <div class="modal-header">
@@ -452,7 +452,7 @@
         </div>
     </div>
 @else
-    <!-- TAMPILAN JIKA BELUM MENGISI PREFERENSI -->
+    
     <div style="text-align: center; padding: 40px; background-color: #ffffff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-top: 3px solid var(--primary-color);">
         <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 50px; color: #ccc; margin-bottom: 15px; display: block;"></i>
         <p style="color: #666; font-size: 15.5px;">
@@ -465,27 +465,27 @@
 
 @section('scripts')
 <script>
-    // Tab switcher for preferences
+    
     function switchPrefTab(evt, tabId) {
-        // Hide all tab contents
+        
         const tabContents = document.querySelectorAll('.tab-content');
         tabContents.forEach(tab => tab.classList.remove('active'));
         
-        // Remove active class from all buttons
+        
         const tabBtns = document.querySelectorAll('.tab-btn');
         tabBtns.forEach(btn => btn.classList.remove('active'));
         
-        // Show selected tab content and active button
+        
         document.getElementById(tabId).classList.add('active');
         evt.currentTarget.classList.add('active');
     }
 
-    // Intercept form submission to show mathematical calculation animation
+    
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('preferenceForm');
         if (form) {
             form.addEventListener('submit', function(e) {
-                // Check if at least one checkbox is checked
+                
                 const checkedBoxes = form.querySelectorAll('input[type="checkbox"]:checked');
                 if (checkedBoxes.length === 0) {
                     e.preventDefault();
@@ -498,28 +498,28 @@
                     return;
                 }
 
-                e.preventDefault(); // Stop submission for animation
+                e.preventDefault(); 
 
-                // Show loading overlay
+                
                 const overlay = document.getElementById('calcLoadingOverlay');
                 overlay.style.display = 'flex';
 
                 const nativeBar = document.getElementById('nativeProgressBar');
                 const statusText = document.getElementById('changingStatusText');
                 
-                // Step-by-step progress simulation
+                
                 let currentPercent = 0;
                 
-                // Update percentage and text sequentially
+                
                 const progressInterval = setInterval(() => {
                     currentPercent += 5;
                     if (currentPercent > 100) currentPercent = 100;
                     
-                    // Update native progress bar width and inner text
+                    
                     nativeBar.style.width = currentPercent + '%';
                     nativeBar.innerText = currentPercent + '%';
                     
-                    // Update changing status text based on percentage range
+                    
                     if (currentPercent < 25) {
                         statusText.innerText = "Mengambil data kost...";
                     } else if (currentPercent < 50) {
@@ -532,17 +532,17 @@
 
                     if (currentPercent >= 100) {
                         clearInterval(progressInterval);
-                        // Submit form after reaching 100%
+                        
                         setTimeout(() => {
                             form.submit();
                         }, 400);
                     }
-                }, 130); // 130ms * 20 steps = ~2.6 seconds total
+                }, 130); 
             });
         }
     });
 
-    // Toggle Slide Up/Down Form Preferensi
+    
     function togglePreferenceForm() {
         var formBody = document.getElementById('preferenceFormBody');
         var icon = document.getElementById('collapseIcon');
@@ -558,7 +558,7 @@
         }
     }
 
-    // Modal Control
+    
     function showCalculationModal(modalId) {
         const modal = document.getElementById(modalId);
         if (modal) {
@@ -566,7 +566,7 @@
         }
     }
 
-    // SweetAlert Konfirmasi Reset Preferensi
+    
     function confirmClearPreferences() {
         Swal.fire({
             title: 'Hapus Preferensi?',

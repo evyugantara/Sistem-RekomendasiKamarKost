@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::create('profil_mahasiswa', function (Blueprint $table) {
@@ -17,16 +15,14 @@ return new class extends Migration
             $table->string('nim')->nullable();
             $table->string('university')->nullable();
             $table->string('major')->nullable();
-            $table->string('gender')->nullable(); // Laki-laki / Perempuan
+            $table->string('gender')->nullable(); 
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::dropIfExists('profil_mahasiswa');

@@ -13,7 +13,7 @@
 </div>
 
 
-<!-- Panel Informasi Akun & Profil Mahasiswa -->
+
 <div class="box box-primary">
     <div class="box-header">
         <h3 class="box-title"><i class="fa-solid fa-user"></i> Informasi Profil & Akun Anda</h3>

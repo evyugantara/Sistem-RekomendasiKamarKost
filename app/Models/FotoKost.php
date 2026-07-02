@@ -15,9 +15,7 @@ class FotoKost extends Model
         'is_primary',
     ];
 
-    /**
-     * Relasi ke Kost
-     */
+    
     public function kost(): BelongsTo
     {
         return $this->belongsTo(Kost::class, 'kost_id');

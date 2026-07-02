@@ -10,7 +10,7 @@
         <h3 class="box-title"><i class="fa-solid fa-users-gear"></i> Daftar Akun Pengguna Terdaftar</h3>
     </div>
     
-    <!-- Filter Bar -->
+    
     <div class="box-body" style="background-color: #fafafa; border-bottom: 1px solid #f4f4f4; padding: 15px;">
         <form action="{{ route('admin.pengguna') }}" method="get">
             <div class="grid-3" style="grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
@@ -34,7 +34,7 @@
         </form>
     </div>
 
-    <!-- Tabel Pengguna -->
+    
     <div class="box-body table-responsive">
         <table class="table-custom">
             <thead>

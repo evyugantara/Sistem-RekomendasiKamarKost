@@ -8,9 +8,9 @@
 <style>
     .pref-badge {
         display: inline-block;
-        background-color: #eff6ff;
-        border: 1px solid #bfdbfe;
-        color: #1e40af;
+        background-color: 
+        border: 1px solid 
+        color: 
         font-size: 11px;
         font-weight: 600;
         padding: 2px 7px;
@@ -23,14 +23,14 @@
         padding: 12px 10px !important;
     }
     .log-card-row:hover {
-        background-color: #f8fafc !important;
+        background-color: 
     }
     .user-avatar {
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background-color: #3c8dbc;
-        color: #fff;
+        background-color: 
+        color: 
         font-weight: 700;
         font-size: 14px;
         display: inline-flex;
@@ -68,7 +68,7 @@
                 <tbody>
                     @forelse($logs as $index => $log)
                         @php
-                            // Pecah preference_summary jadi array lalu buat badge
+                            
                             $prefItems = $log->preference_summary
                                 ? array_filter(array_map('trim', explode(',', $log->preference_summary)))
                                 : [];
@@ -76,7 +76,7 @@
                         <tr class="log-card-row">
                             <td style="text-align:center; font-weight:600; color:#64748b;">{{ $index + 1 }}</td>
 
-                            <!-- Nama Mahasiswa -->
+                            
                             <td>
                                 <div style="display: flex; align-items: center;">
                                     <span class="user-avatar">{{ strtoupper(substr($log->user->name, 0, 1)) }}</span>
@@ -87,7 +87,7 @@
                                 </div>
                             </td>
 
-                            <!-- Info Akademik -->
+                            
                             <td>
                                 <span style="font-size: 11.5px; color:#334155; display:block; line-height:1.5;">
                                     <i class="fa-solid fa-id-card" style="color:#94a3b8; width:14px;"></i>
@@ -97,13 +97,13 @@
                                 </span>
                             </td>
 
-                            <!-- Preferensi Badges -->
+                            
                             <td>
                                 @if(count($prefItems) > 0)
                                     <div style="display: flex; flex-wrap: wrap; gap: 2px; max-width: 500px;">
                                         @foreach($prefItems as $item)
                                             @php
-                                                // Ambil hanya nilai di sebelah kanan titik dua
+                                                
                                                 $parts = explode(':', $item, 2);
                                                 $label = count($parts) === 2 ? trim($parts[1]) : trim($item);
                                                 $key   = count($parts) === 2 ? trim($parts[0]) : '';
@@ -116,7 +116,7 @@
                                 @endif
                             </td>
 
-                            <!-- Hasil Kost -->
+                            
                             <td style="text-align:center;">
                                 @if($log->results_count > 0)
                                     <span class="badge badge-success" style="font-size:12px; padding:5px 10px; border-radius:99px;">
@@ -129,7 +129,7 @@
                                 @endif
                             </td>
 
-                            <!-- Waktu -->
+                            
                             <td>
                                 <span style="font-size:12px; color:#334155; display:block;">
                                     {{ $log->created_at->format('d-m-Y') }}

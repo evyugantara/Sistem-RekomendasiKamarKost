@@ -15,25 +15,19 @@ class AtributKost extends Model
         'opsi_kriteria_id',
     ];
 
-    /**
-     * Relasi ke Kost
-     */
+    
     public function kost(): BelongsTo
     {
         return $this->belongsTo(Kost::class, 'kost_id');
     }
 
-    /**
-     * Relasi ke Kriteria
-     */
+    
     public function kriteria(): BelongsTo
     {
         return $this->belongsTo(Kriteria::class, 'kriteria_id');
     }
 
-    /**
-     * Relasi ke Opsi Kriteria
-     */
+    
     public function opsiKriteria(): BelongsTo
     {
         return $this->belongsTo(OpsiKriteria::class, 'opsi_kriteria_id');

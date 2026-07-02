@@ -15,9 +15,7 @@ class Kampus extends Model
         'longitude',
     ];
 
-    /**
-     * Relasi ke Kost (Kost yang mengacu ke Kampus ini)
-     */
+    
     public function kosts(): HasMany
     {
         return $this->hasMany(Kost::class, 'kampus_id');

@@ -1,24 +1,20 @@
-/* 
-   dashboard-style.css
-   Tema Antarmuka Premium - Modern Slate & Indigo
-   Sistem Rekomendasi Kost Mahasiswa
-*/
+
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --sidebar-bg: #f9fafc; /* Light Gray Sidebar ala Codekop */
+    --sidebar-bg: #f9fafc; 
     --sidebar-hover: #eceff4;
     --sidebar-active: #e2e8f0;
-    --sidebar-text: #475569; /* Slate text */
+    --sidebar-text: #475569; 
     --sidebar-text-hover: #0f172a;
-    --body-bg: #ecf0f5; /* Light grey content background */
-    --header-bg: #3c8dbc; /* Medium Blue Header Bar */
+    --body-bg: #ecf0f5; 
+    --header-bg: #3c8dbc; 
     --primary-color: #3c8dbc;
     --primary-hover: #367fa9;
     --text-color: #222222;
     
-    /* Warna Kartu Metrik */
+    
     --card-blue: #3c8dbc;
     --card-green: #00a65a;
     --card-yellow: #f39c12;
@@ -50,14 +46,14 @@ a:hover {
     color: var(--primary-hover);
 }
 
-/* Layout Wrapper */
+
 .wrapper {
     display: flex;
     min-height: 100vh;
     width: 100vw;
 }
 
-/* Sidebar Modern */
+
 .sidebar {
     width: 250px;
     background-color: var(--sidebar-bg);
@@ -133,7 +129,7 @@ a:hover {
     margin-right: 5px;
 }
 
-/* Kotak Pencarian Menu */
+
 .sidebar-search {
     padding: 10px 12px;
 }
@@ -176,7 +172,7 @@ a:hover {
     outline: none;
 }
 
-/* Menu Navigasi Sidebar - Pill Style */
+
 .sidebar-menu {
     list-style: none;
     padding: 10px 8px;
@@ -237,7 +233,7 @@ a:hover {
     transition: transform 0.2s ease;
 }
 
-/* Main Content Area */
+
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -245,7 +241,7 @@ a:hover {
     min-width: 0;
 }
 
-/* Header Atas (Top Nav) */
+
 .main-header {
     height: 60px;
     background-color: var(--header-bg);
@@ -298,7 +294,7 @@ a:hover {
     border-color: #ffffff;
 }
 
-/* Breadcrumb Navigasi */
+
 .content-header {
     padding: 20px 20px 0 20px;
     display: flex;
@@ -341,13 +337,13 @@ a:hover {
     font-weight: 600;
 }
 
-/* Area Konten Utama */
+
 .content-body {
     padding: 20px;
     flex-grow: 1;
 }
 
-/* Kartu Metrik Dashboard (KPI Cards) - Premium White */
+
 .metrics-row {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -428,7 +424,7 @@ a:hover {
     transform: scale(1.1);
 }
 
-/* Panel Konten (Boxes/Cards) - Premium Clean */
+
 .box {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -481,7 +477,7 @@ a:hover {
     border-bottom-left-radius: 8px;
 }
 
-/* Tabel Premium Style */
+
 .table-responsive {
     overflow-x: auto;
 }
@@ -516,7 +512,7 @@ a:hover {
     background-color: rgba(248, 250, 252, 0.5);
 }
 
-/* Soft Badges */
+
 .badge {
     display: inline-flex;
     align-items: center;
@@ -557,7 +553,7 @@ a:hover {
     border-color: #c7d2fe;
 }
 
-/* Tombol Antarmuka Modern */
+
 .btn-custom {
     display: inline-flex;
     align-items: center;
@@ -626,7 +622,7 @@ a:hover {
     border-radius: 6px;
 }
 
-/* Grid Layouts */
+
 .grid-2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -639,7 +635,7 @@ a:hover {
     gap: 20px;
 }
 
-/* Formulir (Forms) */
+
 .form-group {
     margin-bottom: 15px;
 }
@@ -677,7 +673,7 @@ textarea.form-control {
     height: auto;
 }
 
-/* Formulir Terbagi Kategori (Umum, Pribadi, Bersama) */
+
 .category-section {
     border: 1px solid #e2e8f0;
     background-color: #f8fafc;
@@ -704,7 +700,7 @@ textarea.form-control {
     gap: 15px;
 }
 
-/* Detail Kost */
+
 .kost-detail-container {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -781,7 +777,7 @@ textarea.form-control {
     font-weight: 700;
 }
 
-/* Peta (Leaflet.js Map Widget) */
+
 .map-wrapper {
     height: 350px;
     border-radius: 8px;
@@ -810,7 +806,7 @@ textarea.form-control {
     font-size: 15px;
 }
 
-/* Perhitungan CBF (Trace Calculations) */
+
 .calc-header {
     background-color: #f8fafc;
     padding: 12px;
@@ -857,7 +853,7 @@ textarea.form-control {
     color: #334155;
 }
 
-/* Landing Page (Guest View) */
+
 .guest-navbar {
     background-color: #ffffff;
     height: 60px;
@@ -950,7 +946,7 @@ textarea.form-control {
     }
 }
 
-/* Card Boarding House */
+
 .kost-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1040,7 +1036,7 @@ textarea.form-control {
     gap: 5px;
 }
 
-/* Auth Page */
+
 .auth-wrapper {
     background: linear-gradient(rgba(248, 250, 252, 0.9), rgba(226, 232, 240, 0.9)), url('../uploads/login_bg.png') repeat;
     background-size: 250px;
@@ -1079,7 +1075,7 @@ textarea.form-control {
     margin-bottom: 20px;
 }
 
-/* Modals */
+
 .modal {
     position: fixed;
     top: 0;
@@ -1155,7 +1151,7 @@ textarea.form-control {
     background-color: #f8fafc;
 }
 
-/* Toggle Tabs */
+
 .auth-tabs {
     display: flex;
     border-bottom: 2px solid #e2e8f0;

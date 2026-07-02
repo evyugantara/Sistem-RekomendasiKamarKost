@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard') - Sistem Rekomendasi Kost</title>
     
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Maps API -->
+    
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}"></script>
     
-    <!-- Custom Style CSS -->
+    
     <link rel="stylesheet" href="{{ asset('css/dashboard-style.css') }}?v={{ time() }}">
     
-    <!-- SweetAlert2 -->
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     @yield('styles')
 </head>
 <body>
     <div class="wrapper">
-        <!-- Sidebar Gelap -->
+        
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header" style="font-size: 13.5px; font-weight: bold; white-space: nowrap;">
                 <i class="fa-solid fa-house-laptop"></i> KOST MAHASISWA CBF
@@ -45,7 +45,7 @@
                 </div>
             </div>
             
-            <!-- Kotak Pencarian Menu -->
+            
             <div class="sidebar-search">
                 <div class="search-container">
                     <input type="text" class="search-input" id="menuSearch" placeholder="Pencarian Menu...">
@@ -53,12 +53,12 @@
                 </div>
             </div>
             
-            <!-- Daftar Menu berdasarkan Role -->
+            
             <ul class="sidebar-menu" id="sidebarMenu">
                 <li class="header-menu">MENU NAVIGASI</li>
                 
                 @if(auth()->user()->role == 'admin')
-                    <!-- ADMIN MENU -->
+                    
                     <li class="{{ Request::is('admin') ? 'active' : '' }}">
                         <a href="{{ route('admin.dashboard') }}">
                             <i class="fa-solid fa-gauge"></i>
@@ -94,7 +94,7 @@
                         </a>
                     </li>
                 @elseif(auth()->user()->role == 'pengelola')
-                    <!-- PENGELOLA MENU -->
+                    
                     <li class="{{ Request::is('pengelola') ? 'active' : '' }}">
                         <a href="{{ route('pengelola.dashboard') }}">
                             <i class="fa-solid fa-gauge"></i>
@@ -114,7 +114,7 @@
                         </a>
                     </li>
                 @elseif(auth()->user()->role == 'mahasiswa')
-                    <!-- MAHASISWA MENU -->
+                    
                     <li class="{{ Request::is('mahasiswa') ? 'active' : '' }}">
                         <a href="{{ route('mahasiswa.dashboard') }}">
                             <i class="fa-solid fa-gauge"></i>
@@ -143,7 +143,7 @@
                 </li>
             </ul>
             
-            <!-- Tombol Keluar di Bagian Paling Bawah Sidebar -->
+            
             <div style="border-top: 1px solid #e2e8f0; padding: 12px 15px; background-color: #f8fafc; flex-shrink: 0; margin-top: auto;">
                 <a href="#" onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();" 
                    style="display: flex; align-items: center; gap: 10px; color: #dc2626 !important; font-weight: 600; font-size: 13.5px; text-decoration: none; padding: 8px 12px; border-radius: 4px; transition: background 0.2s;"
@@ -158,9 +158,9 @@
             </div>
         </aside>
         
-        <!-- Main Content Area -->
+        
         <main class="main-content">
-            <!-- Header Atas (Top Nav) -->
+            
             <header class="main-header">
                 <div class="toggle-btn" id="sidebarToggle">
                     <i class="fa-solid fa-bars"></i>
@@ -170,7 +170,7 @@
                 </div>
             </header>
             
-            <!-- Breadcrumbs -->
+            
             <div class="content-header">
                 <h1>@yield('header-title', 'Dashboard')</h1>
                 <ul class="breadcrumb">
@@ -179,7 +179,7 @@
                 </ul>
             </div>
             
-            <!-- Body -->
+            
             <div class="content-body">
                 @if(session('success'))
                     <script>
@@ -226,13 +226,13 @@
     </div>
 
 
-    <!-- ChartJS via CDN -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Script Toggling Sidebar & Menu Search -->
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Toggler Sidebar
+            
             const toggle = document.getElementById('sidebarToggle');
             const sidebar = document.getElementById('sidebar');
             if (toggle && sidebar) {
@@ -247,7 +247,7 @@
                 });
             }
             
-            // Sidebar Menu Search (Mencari dan memfilter menu navigasi secara dinamis)
+            
             const menuSearch = document.getElementById('menuSearch');
             const sidebarMenu = document.getElementById('sidebarMenu');
             if (menuSearch && sidebarMenu) {
@@ -257,7 +257,7 @@
                     
                     for (let i = 0; i < liItems.length; i++) {
                         const li = liItems[i];
-                        if (li.classList.contains('header-menu')) continue; // Skip header label
+                        if (li.classList.contains('header-menu')) continue; 
                         
                         const textVal = li.textContent || li.innerText;
                         if (textVal.toUpperCase().indexOf(filter) > -1) {

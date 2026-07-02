@@ -19,9 +19,7 @@ class ProfilMahasiswa extends Model
         'address',
     ];
 
-    /**
-     * Relasi ke User
-     */
+    
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

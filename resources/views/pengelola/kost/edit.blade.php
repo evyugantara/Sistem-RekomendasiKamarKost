@@ -15,7 +15,7 @@
             @csrf
             
             <div class="grid-2">
-                <!-- Data Detail Kost -->
+                
                 <div>
                     <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px; font-weight: 600; color: #555;">
                         <i class="fa-solid fa-file-invoice"></i> Detail Informasi Kost
@@ -74,14 +74,14 @@
                     </div>
                 </div>
                 
-                <!-- Peta Penentuan Koordinat -->
+                
                 <div>
                     <h4 style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px; font-weight: 600; color: #555;">
                         <i class="fa-solid fa-map-location-dot"></i> Tentukan Titik Koordinat Kost Pada Peta
                     </h4>
                     <p style="color: #666; font-size: 12.5px; margin-bottom: 10px;">Silakan geser pin biru (Kost) ke posisi baru kost Anda berada atau klik langsung di area peta. Pin merah merupakan kampus acuan yang Anda pilih.</p>
                     
-                    <!-- Map Widget Container -->
+                    
                     <div id="coordinateMap" class="map-wrapper" style="height: 380px;"></div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
         var kostLat = parseFloat("{{ $kost->latitude }}");
         var kostLng = parseFloat("{{ $kost->longitude }}");
 
-        // Inisialisasi Peta centering at current kost location
+        
         var map = new google.maps.Map(document.getElementById('coordinateMap'), {
             center: { lat: kostLat, lng: kostLng },
             zoom: 15,
@@ -111,7 +111,7 @@
             streetViewControl: false
         });
 
-        // Markers
+        
         var campusMarker = null;
         var kostMarker = new google.maps.Marker({
             position: { lat: kostLat, lng: kostLng },
@@ -129,19 +129,19 @@
             document.getElementById('lngInput').value = lng.toFixed(8);
         }
 
-        // Listener untuk marker kost drag end
+        
         google.maps.event.addListener(kostMarker, 'dragend', function(event) {
             updateCoordinates(event.latLng.lat(), event.latLng.lng());
         });
 
-        // Update koordinat saat peta diklik
+        
         google.maps.event.addListener(map, 'click', function(event) {
             var clickedLatLng = event.latLng;
             kostMarker.setPosition(clickedLatLng);
             updateCoordinates(clickedLatLng.lat(), clickedLatLng.lng());
         });
 
-        // Tampilkan marker kampus acuan saat load pertama kali
+        
         function showCampusMarker() {
             var selectedOption = kampusSelect.options[kampusSelect.selectedIndex];
             if (selectedOption.value !== "") {
@@ -163,7 +163,7 @@
                     }
                 });
 
-                // Set zoom boundaries to show both
+                
                 var bounds = new google.maps.LatLngBounds();
                 bounds.extend(new google.maps.LatLng(cLat, cLng));
                 bounds.extend(kostMarker.getPosition());
@@ -173,10 +173,10 @@
 
         var kampusSelect = document.getElementById('kampusSelect');
         if (kampusSelect) {
-            // Jalankan saat load
+            
             showCampusMarker();
 
-            // Jalankan saat dirubah
+            
             kampusSelect.addEventListener('change', function() {
                 var selectedOption = kampusSelect.options[kampusSelect.selectedIndex];
                 if (selectedOption.value !== "") {
@@ -198,12 +198,12 @@
                         }
                     });
 
-                    // Pindahkan kost marker dekat kampus baru
+                    
                     var newKostLatLng = new google.maps.LatLng(cLat - 0.001, cLng + 0.001);
                     kostMarker.setPosition(newKostLatLng);
                     updateCoordinates(cLat - 0.001, cLng + 0.001);
 
-                    // Fit Bounds
+                    
                     var bounds = new google.maps.LatLngBounds();
                     bounds.extend(new google.maps.LatLng(cLat, cLng));
                     bounds.extend(newKostLatLng);
@@ -212,7 +212,7 @@
             });
         }
 
-        // Tombol Deteksi Lokasi Saat Ini
+        
         var btnGetLoc = document.getElementById('btnGetCurrentLocation');
         if (btnGetLoc) {
             btnGetLoc.addEventListener('click', function() {

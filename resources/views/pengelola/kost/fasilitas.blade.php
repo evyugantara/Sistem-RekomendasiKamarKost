@@ -12,7 +12,7 @@
         padding: 12px 20px;
         font-weight: 700;
         font-size: 14px;
-        color: #64748b;
+        color: 
         cursor: pointer;
         transition: all 0.2s ease;
         border-bottom: 3px solid transparent;
@@ -22,11 +22,11 @@
         gap: 8px;
     }
     .tab-btn:hover {
-        color: #3c8dbc;
+        color: 
     }
     .tab-btn.active {
-        color: #3c8dbc;
-        border-bottom-color: #3c8dbc;
+        color: 
+        border-bottom-color: 
     }
     .tab-content {
         display: none;
@@ -54,7 +54,7 @@
         <form action="{{ route('pengelola.kost.fasilitas.simpan', $kost->id) }}" method="post">
             @csrf
             
-            <!-- Tab Navigation Buttons -->
+            
             <div style="display: flex; gap: 5px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px;">
                 <button type="button" class="tab-btn active" onclick="switchTab(event, 'tab-umum')">
                     <i class="fa-solid fa-gears"></i> 1. Kriteria Umum
@@ -67,7 +67,7 @@
                 </button>
             </div>
             
-            <!-- Tab 1: Kriteria Umum -->
+            
             <div id="tab-umum" class="tab-content active">
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;">
                     @foreach($kriteriaUmum as $k)
@@ -88,7 +88,7 @@
                 </div>
             </div>
             
-            <!-- Tab 2: Fasilitas Pribadi -->
+            
             <div id="tab-pribadi" class="tab-content">
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;">
                     @foreach($kriteriaPribadi as $k)
@@ -109,7 +109,7 @@
                 </div>
             </div>
             
-            <!-- Tab 3: Fasilitas Bersama -->
+            
             <div id="tab-bersama" class="tab-content">
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;">
                     @foreach($kriteriaBersama as $k)
@@ -144,19 +144,19 @@
 @section('scripts')
 <script>
     function switchTab(evt, tabId) {
-        // Hide all tab contents
+        
         const tabContents = document.getElementsByClassName('tab-content');
         for (let i = 0; i < tabContents.length; i++) {
             tabContents[i].classList.remove('active');
         }
         
-        // Remove active class from all buttons
+        
         const tabBtns = document.getElementsByClassName('tab-btn');
         for (let i = 0; i < tabBtns.length; i++) {
             tabBtns[i].classList.remove('active');
         }
         
-        // Show selected tab content and active button
+        
         document.getElementById(tabId).classList.add('active');
         evt.currentTarget.classList.add('active');
     }

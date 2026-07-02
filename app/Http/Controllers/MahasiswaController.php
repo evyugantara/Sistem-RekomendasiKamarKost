@@ -26,9 +26,7 @@ class MahasiswaController extends Controller
         $this->recommendationService = $recommendationService;
     }
 
-    /**
-     * Dashboard Mahasiswa
-     */
+    
     public function dashboard()
     {
         $user = Auth::user();
@@ -36,15 +34,13 @@ class MahasiswaController extends Controller
         $prefCount = PreferensiMahasiswa::where('user_id', $user->id)->count();
         $contactCount = LogKontak::where('user_id', $user->id)->count();
         
-        // Ambil riwayat rekomendasi terakhir
+        
         $recentLogs = LogRekomendasi::where('user_id', $user->id)->orderBy('created_at', 'desc')->limit(5)->get();
 
         return view('mahasiswa.dashboard', compact('user', 'favCount', 'prefCount', 'contactCount', 'recentLogs'));
     }
 
-    /**
-     * Tampilkan Form Profil Mahasiswa
-     */
+    
     public function profil()
     {
         $user = Auth::user();
@@ -52,9 +48,7 @@ class MahasiswaController extends Controller
         return view('mahasiswa.profil', compact('user', 'profil'));
     }
 
-    /**
-     * Update Profil Mahasiswa
-     */
+    
     public function updateProfil(Request $request)
     {
         $user = Auth::user();
@@ -69,7 +63,7 @@ class MahasiswaController extends Controller
             'address' => 'required|string',
         ]);
 
-        // Update core User
+        
         $user->name = $request->name;
         $user->email = $request->email;
         if ($request->filled('password')) {
@@ -77,7 +71,7 @@ class MahasiswaController extends Controller
         }
         $user->save();
 
-        // Update Profil Detail
+        
         if (!$profil) {
             $profil = new ProfilMahasiswa();
             $profil->user_id = $user->id;
@@ -90,25 +84,23 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswa.profil')->with('success', 'Profil Anda berhasil diperbarui!');
     }
 
-    /**
-     * Tampilkan Halaman Rekomendasi Kost (Menggabungkan Pengisian Preferensi & Hasil Rekomendasi)
-     */
+    
     public function rekomendasi()
     {
         $user = Auth::id();
         
-        // Hitung skor kecocokan rekomendasi kost
+        
         $recommendations = $this->recommendationService->getRecommendations($user);
 
-        // Ambil list kriteria dan opsi yang dipilih mahasiswa saat ini untuk info tampilan
+        
         $mahasiswaPrefs = PreferensiMahasiswa::with(['kriteria', 'opsiKriteria'])
             ->where('user_id', $user)
             ->get();
 
-        // Ambil ID opsi kriteria aktif untuk menyeleksi form input secara default
+        
         $currentPrefs = $mahasiswaPrefs->pluck('opsi_kriteria_id')->toArray();
 
-        // Ambil semua kriteria yang dikelompokkan berdasarkan kategori
+        
         $kriterias = Kriteria::with('opsiKriteria')->get();
         $kriteriaUmum = $kriterias->where('category', 'umum');
         $kriteriaPribadi = $kriterias->where('category', 'pribadi');
@@ -124,18 +116,16 @@ class MahasiswaController extends Controller
         ));
     }
 
-    /**
-     * Simpan Preferensi Kriteria Mahasiswa
-     */
+    
     public function savePreferensi(Request $request)
     {
         $user = Auth::id();
         
-        // Atribut/Kriteria didesain dinamis
-        // Opsi dikirim dalam format array input: prefs[kriteria_id] = [opsi_kriteria_id1, opsi_kriteria_id2, ...]
+        
+        
         $prefs = $request->input('prefs', []);
 
-        // Hapus preferensi lama
+        
         PreferensiMahasiswa::where('user_id', $user)->delete();
 
         $savedCount = 0;
@@ -151,7 +141,7 @@ class MahasiswaController extends Controller
                             'opsi_kriteria_id' => $opsiId
                         ]);
 
-                        // Dapatkan nama kriteria & opsi untuk log ringkasan
+                        
                         $opsi = OpsiKriteria::with('kriteria')->find($opsiId);
                         if ($opsi) {
                             $prefSummaryArray[] = $opsi->kriteria->name . ': ' . $opsi->value;
@@ -167,7 +157,7 @@ class MahasiswaController extends Controller
                         'opsi_kriteria_id' => $opsiIds
                     ]);
 
-                    // Dapatkan nama kriteria & opsi untuk log ringkasan
+                    
                     $opsi = OpsiKriteria::with('kriteria')->find($opsiIds);
                     if ($opsi) {
                         $prefSummaryArray[] = $opsi->kriteria->name . ': ' . $opsi->value;
@@ -178,11 +168,11 @@ class MahasiswaController extends Controller
         }
 
         if ($savedCount > 0) {
-            // Jalankan pencarian rekomendasi untuk mendapatkan jumlah hasil
+            
             $recommendations = $this->recommendationService->getRecommendations($user);
             $resultsCount = count($recommendations);
 
-            // Log riwayat rekomendasi ke database
+            
             LogRekomendasi::create([
                 'user_id' => $user,
                 'preference_summary' => implode(', ', $prefSummaryArray),
@@ -195,9 +185,7 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswa.rekomendasi')->with('error', 'Silakan pilih minimal satu preferensi kriteria.');
     }
 
-    /**
-     * Tampilkan Daftar Kamar Favorit
-     */
+    
     public function favorit()
     {
         $user = Auth::id();
@@ -206,9 +194,7 @@ class MahasiswaController extends Controller
         return view('mahasiswa.favorit', compact('favorits'));
     }
 
-    /**
-     * Tambah/Hapus Bookmark Kamar Favorit
-     */
+    
     public function toggleFavorit($id)
     {
         $user = Auth::id();
@@ -234,9 +220,7 @@ class MahasiswaController extends Controller
         return redirect()->back()->with('success', $msg);
     }
 
-    /**
-     * Hubungi Pengelola Kost (WhatsApp atau Telepon) & Simpan Log Kontak
-     */
+    
     public function contact($id, $type)
     {
         $user = Auth::id();
@@ -249,7 +233,7 @@ class MahasiswaController extends Controller
             return redirect()->back()->with('error', 'Kontak pengelola kost tidak tersedia.');
         }
 
-        // Catat log kontak ke database
+        
         LogKontak::create([
             'user_id' => $user,
             'kamar_id' => $id,
@@ -259,26 +243,24 @@ class MahasiswaController extends Controller
         $phone = $profil->phone;
 
         if ($type === 'whatsapp') {
-            // Bersihkan nomor telepon agar sesuai format internasional (62)
+            
             $cleanPhone = preg_replace('/[^0-9]/', '', $phone);
             if (strpos($cleanPhone, '0') === 0) {
                 $cleanPhone = '62' . substr($cleanPhone, 1);
             }
             
-            // Buat pesan template
+            
             $message = urlencode("Halo Bpk/Ibu " . $pengelola->name . ", saya tertarik dengan \"" . $kamar->name . "\" di Kost \"" . $kost->name . "\" yang dipublikasikan di Web Rekomendasi Kost. Apakah masih ada kamar kosong?");
             
             $waUrl = "https://api.whatsapp.com/send?phone=" . $cleanPhone . "&text=" . $message;
             return redirect()->away($waUrl);
         } else {
-            // Direct call/telepon
+            
             return redirect()->away('tel:' . $phone);
         }
     }
 
-    /**
-     * Hapus / Reset Semua Preferensi Mahasiswa
-     */
+    
     public function clearPreferensi()
     {
         $user = Auth::id();

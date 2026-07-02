@@ -15,17 +15,13 @@ class LogKontak extends Model
         'contact_type',
     ];
 
-    /**
-     * Relasi ke User (Mahasiswa)
-     */
+    
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Relasi ke Kamar
-     */
+    
     public function kamar(): BelongsTo
     {
         return $this->belongsTo(Kamar::class, 'kamar_id');

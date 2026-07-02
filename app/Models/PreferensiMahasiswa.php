@@ -15,25 +15,19 @@ class PreferensiMahasiswa extends Model
         'opsi_kriteria_id',
     ];
 
-    /**
-     * Relasi ke User (Mahasiswa)
-     */
+    
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Relasi ke Kriteria
-     */
+    
     public function kriteria(): BelongsTo
     {
         return $this->belongsTo(Kriteria::class, 'kriteria_id');
     }
 
-    /**
-     * Relasi ke Opsi Kriteria
-     */
+    
     public function opsiKriteria(): BelongsTo
     {
         return $this->belongsTo(OpsiKriteria::class, 'opsi_kriteria_id');

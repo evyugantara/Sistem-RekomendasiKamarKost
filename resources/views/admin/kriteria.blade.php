@@ -6,9 +6,9 @@
 
 @section('content')
 <div class="grid-2" style="grid-template-columns: 0.9fr 1.3fr; gap: 20px;">
-    <!-- KOLOM KIRI: DAFTAR KRITERIA & FORM TAMBAH -->
+    
     <div>
-        <!-- Daftar Kriteria -->
+        
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa-solid fa-list"></i> Kriteria Terdaftar</h3>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <!-- Tambah Kriteria Baru -->
+        
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa-solid fa-plus-circle"></i> Tambah Kriteria Baru</h3>
@@ -79,7 +79,7 @@
                         </select>
                     </div>
                     
-                    <!-- Type default to select behind the scenes -->
+                    
                     <input type="hidden" name="type" value="select">
                     
                     <button type="submit" class="btn-custom btn-primary-custom" style="width: 100%; font-weight: bold; margin-top: 10px;">
@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <!-- KOLOM KANAN: KELOLA OPSI PILIHAN KRITERIA (CHECKBOX STYLE PREVIEW IN 2-COLUMN GRID) -->
+    
     <div>
         <div class="box box-primary">
             <div class="box-header">
@@ -112,7 +112,7 @@
                                     </strong>
                                 </div>
                                 
-                                <!-- List Opsi dengan Tampilan Checkbox -->
+                                
                                 <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px;">
                                     @forelse($kr->opsiKriteria as $opsi)
                                         <div style="display: flex; align-items: center; justify-content: space-between; padding: 2px 0;">
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
                             
-                            <!-- Form Tambah Opsi Baru -->
+                            
                             <form action="{{ route('admin.kriteria.opsi.simpan', $kr->id) }}" method="post" style="display: flex; gap: 4px; margin-top: auto; border-top: 1px solid #f1f5f9; padding-top: 8px;">
                                 @csrf
                                 <input type="text" name="value" class="form-control" placeholder="Tambah opsi..." style="height: 26px; font-size: 11px; padding: 2px 6px;" required>

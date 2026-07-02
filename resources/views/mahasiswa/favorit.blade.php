@@ -18,7 +18,7 @@
                 <a href="{{ route('home') }}" class="btn-custom btn-primary-custom" style="margin-top: 15px; font-weight: bold;"><i class="fa fa-search"></i> Telusuri Kost Sekarang</a>
             </div>
         @else
-            <!-- Grid Card Favorit -->
+            
             <div class="grid-3">
                 @foreach($favorits as $fav)
                     @php

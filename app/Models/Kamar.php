@@ -19,41 +19,31 @@ class Kamar extends Model
         'image_path',
     ];
 
-    /**
-     * Relasi ke Kost Induk
-     */
+    
     public function kost(): BelongsTo
     {
         return $this->belongsTo(Kost::class, 'kost_id');
     }
 
-    /**
-     * Relasi ke Atribut/Spesifikasi Fasilitas Kamar (Pribadi)
-     */
+    
     public function atributKamar(): HasMany
     {
         return $this->hasMany(AtributKamar::class, 'kamar_id');
     }
 
-    /**
-     * Relasi ke Kamar Favorit (Bookmarks)
-     */
+    
     public function kamarFavorit(): HasMany
     {
         return $this->hasMany(KamarFavorit::class, 'kamar_id');
     }
 
-    /**
-     * Relasi ke Log Kontak
-     */
+    
     public function logKontak(): HasMany
     {
         return $this->hasMany(LogKontak::class, 'kamar_id');
     }
 
-    /**
-     * Mendapatkan foto utama kamar (jika kosong, gunakan foto kost induk)
-     */
+    
     public function fotoKamar()
     {
         if ($this->image_path) {

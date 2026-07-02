@@ -10,7 +10,7 @@
         <h3 class="box-title"><i class="fa-solid fa-shield-halved"></i> Daftar Pengajuan Registrasi & Kost Baru</h3>
     </div>
 
-    <!-- Tabel Pengajuan -->
+    
     <div class="box-body table-responsive">
         <table class="table-custom">
             <thead>
@@ -115,7 +115,7 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Tampilkan loading spinner
+                
                 Swal.fire({
                     title: 'Memproses...',
                     text: 'Harap tunggu sebentar.',
@@ -125,7 +125,7 @@
                     }
                 });
 
-                // Kirim request via AJAX Fetch
+                
                 fetch(`/admin/pengajuan/${id}/verifikasi`, {
                     method: 'POST',
                     headers: {

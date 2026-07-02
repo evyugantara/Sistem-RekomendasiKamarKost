@@ -7,13 +7,9 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PengelolaController;
 use App\Http\Controllers\AdminController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
 
-// --- Rute Guest (Umum) ---
+
+
 Route::get('/', [KostController::class, 'index'])->name('home');
 Route::get('/kost/{id}', [KostController::class, 'show'])->name('kost.detail');
 
@@ -25,10 +21,10 @@ Route::post('/register/pengelola', [AuthController::class, 'registerPengelola'])
 Route::get('/pending', [AuthController::class, 'pending'])->name('pending');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// --- Rute Pengguna Terautentikasi (Group Auth) ---
+
 Route::middleware(['auth'])->group(function () {
 
-    // --- Rute Peran Mahasiswa ---
+    
     Route::prefix('mahasiswa')->middleware('role:mahasiswa')->group(function () {
         Route::get('/', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
         
@@ -45,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/kost/{id}/kontak/{type}', [MahasiswaController::class, 'contact'])->name('mahasiswa.contact');
     });
 
-    // --- Rute Peran Pengelola Kost ---
+    
     Route::prefix('pengelola')->middleware('role:pengelola')->group(function () {
         Route::get('/', [PengelolaController::class, 'dashboard'])->name('pengelola.dashboard');
         
@@ -67,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/kost/{id}/fotos/{foto_id}/hapus', [PengelolaController::class, 'hapusFoto'])->name('pengelola.kost.fotos.hapus');
         Route::post('/kost/{id}/fotos/{foto_id}/utama', [PengelolaController::class, 'setFotoUtama'])->name('pengelola.kost.fotos.utama');
 
-        // CRUD Kamar Kost
+        
         Route::get('/kost/{kost_id}/kamar', [PengelolaController::class, 'kamar'])->name('pengelola.kost.kamar');
         Route::get('/kost/{kost_id}/kamar/tambah', [PengelolaController::class, 'tambahKamar'])->name('pengelola.kost.kamar.tambah');
         Route::post('/kost/{kost_id}/kamar/simpan', [PengelolaController::class, 'simpanKamar'])->name('pengelola.kost.kamar.simpan');
@@ -76,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/kost/{kost_id}/kamar/{id}/hapus', [PengelolaController::class, 'hapusKamar'])->name('pengelola.kost.kamar.hapus');
     });
 
-    // --- Rute Peran Admin ---
+    
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         

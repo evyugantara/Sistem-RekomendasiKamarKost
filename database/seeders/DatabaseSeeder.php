@@ -20,19 +20,17 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
+    
     public function run(): void
     {
-        // 1. Buat Kampus Acuan (Universitas Suryakancana - Cianjur)
+        
         $kampus = Kampus::create([
             'name' => 'Universitas Suryakancana (UNSUR)',
             'latitude' => -6.81245000,
             'longitude' => 107.14090000,
         ]);
 
-        // 2. Buat Akun Admin
+        
         $admin = User::create([
             'name' => 'Admin Utama',
             'username' => 'admin',
@@ -42,7 +40,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        // 3. Buat Akun Pengelola
+        
         $pengelolaUser = User::create([
             'name' => 'Budi Santoso',
             'username' => 'pengelola',
@@ -58,7 +56,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'Jl. Pasir Gede, Cianjur',
         ]);
 
-        // 4. Buat Akun Mahasiswa
+        
         $mahasiswaUser = User::create([
             'name' => 'Ahmad Hidayat',
             'username' => 'mahasiswa',
@@ -77,9 +75,9 @@ class DatabaseSeeder extends Seeder
             'address' => 'Jl. KH. Abdullah Bin Nuh, Cianjur',
         ]);
 
-        // 5. Buat 16 Kriteria & Opsi Kriteria (Content-Based Filtering)
+        
         $kriterias = [
-            // Kategori Umum
+            
             [
                 'name' => 'Jenis Kost',
                 'type' => 'select',
@@ -117,7 +115,7 @@ class DatabaseSeeder extends Seeder
                 'options' => ['Parkir Mobil & Motor', 'Parkir Motor Saja', 'Tidak Ada Parkir']
             ],
 
-            // Kategori Pribadi
+            
             [
                 'name' => 'Kamar Mandi Dalam',
                 'type' => 'select',
@@ -155,7 +153,7 @@ class DatabaseSeeder extends Seeder
                 'options' => ['Ada AC', 'Tidak Ada AC']
             ],
 
-            // Kategori Bersama
+            
             [
                 'name' => 'Fasilitas Wi-Fi',
                 'type' => 'select',
@@ -182,7 +180,7 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        // Menyimpan data Kriteria dan Opsi ke database
+        
         $savedKriterias = [];
         foreach ($kriterias as $kData) {
             $k = Kriteria::create([
@@ -205,7 +203,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // 6. Buat 5 Sampel Kost dan Kamar (Berlokasi dekat kampus UNSUR Cianjur)
+        
         $kostsData = [
             [
                 'name' => 'Kost Putra Mandiri',
@@ -441,7 +439,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($kostsData as $kData) {
-            // Hitung harga dasar kost sebagai rata-rata harga kamarnya
+            
             $prices = array_column($kData['rooms'], 'price');
             $avgPrice = count($prices) > 0 ? (array_sum($prices) / count($prices)) : 0;
 
@@ -456,14 +454,14 @@ class DatabaseSeeder extends Seeder
                 'description' => $kData['description']
             ]);
 
-            // Tambahkan Foto Utama
+            
             FotoKost::create([
                 'kost_id' => $kost->id,
                 'image_path' => $kData['image'],
                 'is_primary' => true
             ]);
 
-            // Tambahkan Atribut Kost (Fasilitas Bersama/Umum)
+            
             foreach ($kData['shared_attributes'] as $kName => $oVal) {
                 if (isset($savedKriterias[$kName])) {
                     $kId = $savedKriterias[$kName]['model']->id;
@@ -479,7 +477,7 @@ class DatabaseSeeder extends Seeder
                 }
             }
 
-            // Tambahkan Kamar & Atribut Kamar
+            
             foreach ($kData['rooms'] as $rData) {
                 $kamar = Kamar::create([
                     'kost_id' => $kost->id,
@@ -490,7 +488,7 @@ class DatabaseSeeder extends Seeder
                     'image_path' => null
                 ]);
 
-                // Tambahkan Atribut Kamar (Fasilitas Pribadi)
+                
                 foreach ($rData['attributes'] as $kName => $oVal) {
                     if (isset($savedKriterias[$kName])) {
                         $kId = $savedKriterias[$kName]['model']->id;
@@ -508,7 +506,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // 7. Tambahkan Bookmark (Kamar Favorit) awal untuk Mahasiswa
+        
         $anyKamar = Kamar::first();
         if ($anyKamar) {
             KamarFavorit::create([
@@ -516,7 +514,7 @@ class DatabaseSeeder extends Seeder
                 'kamar_id' => $anyKamar->id
             ]);
 
-            // Tambahkan Log Kontak awal
+            
             LogKontak::create([
                 'user_id' => $mahasiswaUser->id,
                 'kamar_id' => $anyKamar->id,

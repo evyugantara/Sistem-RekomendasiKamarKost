@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    /**
-     * Dashboard Monitoring Admin
-     */
+    
     public function dashboard()
     {
-        // 1. Hitung data-data KPI Card
+        
         $totalMahasiswa = User::where('role', 'mahasiswa')->count();
         $activeMahasiswa = User::where('role', 'mahasiswa')->where('status', 'active')->count();
         $totalPengelola = User::where('role', 'pengelola')->count();
@@ -26,8 +24,8 @@ class AdminController extends Controller
         $totalSearches = LogRekomendasi::count();
         $totalContacts = LogKontak::count();
 
-        // 2. Data Statistik Pendaftaran Pengguna Baru (6 Bulan Terakhir) untuk Grafik Trend
-        // Kita simulasikan data tren registrasi bulanan untuk Chart.js
+        
+        
         $months = [];
         $studentRegistrations = [];
         $ownerRegistrations = [];
@@ -42,7 +40,7 @@ class AdminController extends Controller
                 ->whereMonth('created_at', $date->month)
                 ->count();
             
-            // Tambahkan data dummy agar grafik terlihat dinamis jika database masih baru
+            
             $studentRegistrations[] = $sCount > 0 ? $sCount : rand(5, 25);
 
             $pCount = User::where('role', 'pengelola')
@@ -65,9 +63,7 @@ class AdminController extends Controller
         ));
     }
 
-    /**
-     * Tampilkan Halaman Kelola Pengguna
-     */
+    
     public function pengguna(Request $request)
     {
         $query = User::with(['profilMahasiswa', 'profilPengelola'])->where('role', '!=', 'admin');
@@ -90,9 +86,7 @@ class AdminController extends Controller
         return view('admin.pengguna', compact('users'));
     }
 
-    /**
-     * Aktifkan / Nonaktifkan Akun Pengguna
-     */
+    
     public function toggleStatus($id)
     {
         $user = User::findOrFail($id);
@@ -108,19 +102,15 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Akun ' . $user->name . ' berhasil ' . $statusMsg . '.');
     }
 
-    /**
-     * Tampilkan Halaman Kelola Kriteria & Opsi Kost
-     */
+    
     public function kriteria()
     {
-        // Muat kriteria beserta opsi-opsinya
+        
         $kriterias = Kriteria::with('opsiKriteria')->orderBy('category')->orderBy('id')->get();
         return view('admin.kriteria', compact('kriterias'));
     }
 
-    /**
-     * Simpan Kriteria Baru
-     */
+    
     public function simpanKriteria(Request $request)
     {
         $request->validate([
@@ -138,9 +128,7 @@ class AdminController extends Controller
         return redirect()->route('admin.kriteria')->with('success', 'Kriteria baru berhasil ditambahkan!');
     }
 
-    /**
-     * Update Data Kriteria
-     */
+    
     public function updateKriteria(Request $request, $id)
     {
         $kriteria = Kriteria::findOrFail($id);
@@ -160,9 +148,7 @@ class AdminController extends Controller
         return redirect()->route('admin.kriteria')->with('success', 'Data kriteria berhasil diperbarui!');
     }
 
-    /**
-     * Hapus Kriteria beserta Opsi Relasinya
-     */
+    
     public function hapusKriteria($id)
     {
         $kriteria = Kriteria::findOrFail($id);
@@ -171,9 +157,7 @@ class AdminController extends Controller
         return redirect()->route('admin.kriteria')->with('success', 'Kriteria berhasil dihapus.');
     }
 
-    /**
-     * Simpan Opsi Pilihan Baru untuk Kriteria Tertentu
-     */
+    
     public function simpanOpsi(Request $request, $id)
     {
         $request->validate([
@@ -188,9 +172,7 @@ class AdminController extends Controller
         return redirect()->route('admin.kriteria')->with('success', 'Opsi pilihan baru berhasil ditambahkan!');
     }
 
-    /**
-     * Hapus Opsi Pilihan Kriteria
-     */
+    
     public function hapusOpsi($opsiId)
     {
         $opsi = OpsiKriteria::findOrFail($opsiId);
@@ -199,9 +181,7 @@ class AdminController extends Controller
         return redirect()->route('admin.kriteria')->with('success', 'Opsi kriteria berhasil dihapus.');
     }
 
-    /**
-     * Tampilkan Halaman Daftar Pengajuan Registrasi Pengelola (Pending)
-     */
+    
     public function pengajuan()
     {
         $pengajuans = User::with(['profilPengelola', 'kosts.kampus'])
@@ -213,9 +193,7 @@ class AdminController extends Controller
         return view('admin.pengajuan', compact('pengajuans'));
     }
 
-    /**
-     * Format nomor HP agar diawali dengan kode negara 62
-     */
+    
     private function formatPhoneNumber($phone)
     {
         $phone = preg_replace('/[^0-9]/', '', $phone);
@@ -225,14 +203,12 @@ class AdminController extends Controller
         return $phone;
     }
 
-    /**
-     * Mengirim pesan WhatsApp secara otomatis di background via Fonnte API
-     */
+    
     private function sendWhatsAppViaFonnte($phone, $message)
     {
         $token = env('FONNTE_API_TOKEN');
         
-        // Simulasi jika token kosong di file .env (menulis ke file log laravel)
+        
         if (empty($token)) {
             \Log::info("Simulasi WhatsApp Terkirim (Tanpa Token API) ke {$phone}: {$message}");
             return false;
@@ -271,9 +247,7 @@ class AdminController extends Controller
         return true;
     }
 
-    /**
-     * Setujui atau Tolak Pengajuan Registrasi Pengelola
-     */
+    
     public function verifikasiPengelola(Request $request, $id)
     {
         $user = User::with('profilPengelola')->findOrFail($id);
@@ -306,7 +280,7 @@ class AdminController extends Controller
                 $this->sendWhatsAppViaFonnte($phone, $message);
             }
 
-            // Hapus user beserta relasinya (draft kost & profil cascade)
+            
             $user->delete();
 
             if ($request->ajax() || $request->wantsJson()) {
@@ -327,9 +301,7 @@ class AdminController extends Controller
         return redirect()->route('admin.pengajuan')->with('error', 'Aksi tidak dikenal.');
     }
 
-    /**
-     * Tampilkan Halaman Log Riwayat Rekomendasi
-     */
+    
     public function logs()
     {
         $logs = LogRekomendasi::with('user')->orderBy('created_at', 'desc')->get();
