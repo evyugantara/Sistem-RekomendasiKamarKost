@@ -91,18 +91,28 @@
                             @endif
                         </td>
                         <td style="text-align: center;">
-                            <form action="{{ route('admin.pengguna.toggle', $u->id) }}" method="post">
-                                @csrf
-                                @if($u->status === 'active')
-                                    <button type="submit" class="btn-custom btn-danger-custom btn-xs" style="width: 100%;">
-                                        <i class="fa-solid fa-user-slash"></i> Nonaktifkan
+                            <div style="display: flex; flex-direction: column; gap: 5px;">
+                                <button type="button" class="btn-custom btn-primary-custom btn-xs" style="width: 100%;" 
+                                        onclick="openEditUserModal({
+                                            id: {{ $u->id }},
+                                            name: '{{ addslashes($u->name) }}',
+                                            username: '{{ addslashes($u->username) }}',
+                                            email: '{{ addslashes($u->email) }}',
+                                            status: '{{ $u->status }}'
+                                        })">
+                                    <i class="fa-solid fa-user-pen"></i> Detail
+                                </button>
+                                
+                                @if($u->status === 'inactive')
+                                    <button type="button" class="btn-custom btn-danger-custom btn-xs" style="width: 100%;" 
+                                            onclick="confirmDeleteUser({{ $u->id }}, '{{ addslashes($u->name) }}')">
+                                        <i class="fa-solid fa-trash-can"></i> Hapus Akun
                                     </button>
-                                @else
-                                    <button type="submit" class="btn-custom btn-success-custom btn-xs" style="width: 100%;">
-                                        <i class="fa-solid fa-user-check"></i> Aktifkan Akun
-                                    </button>
+                                    <form id="delete-user-form-{{ $u->id }}" action="{{ route('admin.pengguna.hapus', $u->id) }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                 @endif
-                            </form>
+                            </div>
                         </td>
                     </tr>
                 @empty
@@ -114,4 +124,92 @@
         </table>
     </div>
 </div>
+
+<!-- Modal Edit Pengguna -->
+<div class="modal" id="editUserModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 style="margin: 0; font-weight: 700;"><i class="fa-solid fa-circle-info"></i> Detail & Edit Akun Pengguna</h4>
+            <span class="close-btn" onclick="closeEditUserModal()">&times;</span>
+        </div>
+        <form id="editUserForm" method="POST" action="">
+            @csrf
+            <div class="box-body" style="padding: 20px;">
+                <div class="form-group">
+                    <label>Username (Tidak dapat diubah)</label>
+                    <input type="text" id="edit_username" class="form-control" style="background-color: #f1f5f9; cursor: not-allowed;" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" name="name" id="edit_name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Alamat Email</label>
+                    <input type="email" name="email" id="edit_email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Password Baru (Kosongkan jika tidak ingin diubah)</label>
+                    <input type="password" name="password" class="form-control" placeholder="Minimal 6 karakter">
+                </div>
+                <div class="form-group">
+                    <label>Status Akun</label>
+                    <select name="status" id="edit_status" class="form-control" required>
+                        <option value="active">Aktif</option>
+                        <option value="inactive">Nonaktif</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-custom" style="background-color: #cbd5e1; color: #334155; margin-right: 5px;" onclick="closeEditUserModal()">Batal</button>
+                <button type="submit" class="btn-custom btn-primary-custom">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    function openEditUserModal(user) {
+        const modal = document.getElementById('editUserModal');
+        const form = document.getElementById('editUserForm');
+        
+        form.action = `/admin/pengguna/${user.id}/update`;
+        
+        document.getElementById('edit_username').value = user.username;
+        document.getElementById('edit_name').value = user.name;
+        document.getElementById('edit_email').value = user.email;
+        document.getElementById('edit_status').value = user.status;
+        
+        modal.classList.add('active');
+    }
+
+    function closeEditUserModal() {
+        document.getElementById('editUserModal').classList.remove('active');
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('editUserModal');
+        if (event.target === modal) {
+            closeEditUserModal();
+        }
+    }
+
+    function confirmDeleteUser(id, name) {
+        Swal.fire({
+            title: 'Konfirmasi Hapus Akun',
+            text: `Apakah Anda yakin ingin menghapus akun "${name}" secara permanen dari sistem?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`delete-user-form-${id}`).submit();
+            }
+        });
+    }
+</script>
 @endsection

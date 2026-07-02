@@ -58,8 +58,7 @@
                 <thead>
                     <tr>
                         <th style="width: 40px; text-align:center;">No</th>
-                        <th style="width: 170px;">Mahasiswa</th>
-                        <th style="width: 150px;">Info Akademik</th>
+                        <th style="width: 200px;">Mahasiswa</th>
                         <th>Preferensi yang Dicari</th>
                         <th style="width: 110px; text-align: center;">Kost Cocok</th>
                         <th style="width: 120px;">Waktu</th>
@@ -85,16 +84,6 @@
                                         <span style="font-size:11px; color:#94a3b8;">{{ $log->user->username }}</span>
                                     </div>
                                 </div>
-                            </td>
-
-                            
-                            <td>
-                                <span style="font-size: 11.5px; color:#334155; display:block; line-height:1.5;">
-                                    <i class="fa-solid fa-id-card" style="color:#94a3b8; width:14px;"></i>
-                                    {{ $log->user->profilMahasiswa->nim ?? '-' }}<br>
-                                    <i class="fa-solid fa-graduation-cap" style="color:#94a3b8; width:14px;"></i>
-                                    {{ $log->user->profilMahasiswa->major ?? '-' }}
-                                </span>
                             </td>
 
                             
@@ -141,7 +130,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" style="text-align: center; color: #888; padding: 40px;">
+                            <td colspan="5" style="text-align: center; color: #888; padding: 40px;">
                                 <i class="fa-solid fa-magnifying-glass" style="font-size: 32px; color: #ddd; display: block; margin-bottom: 10px;"></i>
                                 Belum ada log aktivitas pencarian rekomendasi kost dalam sistem.
                             </td>

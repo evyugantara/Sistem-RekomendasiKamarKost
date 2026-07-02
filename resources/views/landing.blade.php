@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beranda - Sistem Rekomendasi Kost Mahasiswa</title>
     
-    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    
+    <!-- Custom Style CSS -->
     <link rel="stylesheet" href="{{ asset('css/dashboard-style.css') }}?v={{ time() }}">
 </head>
 <body style="background-color: var(--body-bg);">
     
-    
+    <!-- Header Guest Nav -->
     <nav class="guest-navbar">
         <div class="brand">
             <i class="fa-solid fa-house-laptop" style="color: #3c8dbc;"></i> KOST MAHASISWA CBF
@@ -35,7 +35,7 @@
         </div>
     </nav>
 
-    
+    <!-- Hero Section -->
     <header class="hero-section">
         <h1>Temukan Kost Mahasiswa Sesuai Preferensi Anda</h1>
         <p>Sistem pencarian dan rekomendasi kost berbasis web menggunakan metode **Content-Based Filtering** untuk membantu mahasiswa menemukan kost terbaik di sekitar kampus secara mudah dan cepat.</p>
@@ -48,7 +48,7 @@
         @endguest
     </header>
 
-    
+    <!-- Search & Filter Box -->
     <section class="search-filter-box">
         <form action="{{ route('home') }}" method="GET">
             <div class="search-filter-grid">
@@ -85,7 +85,7 @@
         </form>
     </section>
 
-    
+    <!-- Kost Grid Section -->
     <main>
         <div class="content-header" style="padding: 0 30px 10px 30px; margin-bottom: 10px;">
             <h2>Daftar Kost Tersedia ({{ $kosts->count() }})</h2>
@@ -100,11 +100,11 @@
             <div class="kost-grid">
                 @foreach($kosts as $k)
                     <article class="kost-card">
-                        
+                        <!-- Tampilkan foto utama atau default -->
                         <img src="{{ $k->fotoUtama() }}" alt="{{ $k->name }}">
                         
                         <div class="body">
-                            
+                            <!-- Badge Jenis Kost -->
                             <div style="margin-bottom: 8px;">
                                 @php
                                     $jenis = $k->atributKost->where('kriteria.name', 'Jenis Kost')->first();
@@ -140,7 +140,7 @@
                             </p>
                             <p class="address"><i class="fa fa-map-marker-alt"></i> {{ Str::limit($k->address, 65) }}</p>
                             
-                            
+                            <!-- Badges Facilities -->
                             <div class="badges">
                                 @php
                                     $wifi = $k->atributKost->where('kriteria.name', 'Fasilitas Wi-Fi')->first();
@@ -162,7 +162,7 @@
                                 <a href="{{ route('kost.detail', $k->id) }}" class="btn-custom btn-primary-custom btn-sm" style="text-align: center;">
                                     <i class="fa fa-eye"></i> Lihat Detail Kost
                                 </a>
-                                
+                                <!-- Tombol Rute Kost → UNSUR langsung di Google Maps -->
                                 <a href="https://www.google.com/maps/dir/?api=1&origin={{ $k->latitude }},{{ $k->longitude }}&destination=-6.81245,107.14090&travelmode=driving"
                                    target="_blank"
                                    title="Rute Kost ke Kampus UNSUR"

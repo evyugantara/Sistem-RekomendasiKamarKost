@@ -6,7 +6,7 @@
 
 @section('styles')
 <style>
-    
+    /* Dropdown Action Menu styling */
     .action-dropdown {
         position: relative;
         display: inline-block;
@@ -15,17 +15,17 @@
         display: none;
         position: absolute;
         right: 0;
-        background-color: 
+        background-color: #fff;
         min-width: 170px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
         z-index: 100;
-        border: 1px solid 
+        border: 1px solid #ddd;
         border-radius: 4px;
         text-align: left;
         margin-top: 2px;
     }
     .action-dropdown-content a, .action-dropdown-content button {
-        color: 
+        color: #333;
         padding: 10px 16px;
         text-decoration: none;
         display: block;
@@ -39,18 +39,18 @@
         transition: background-color 0.2s;
     }
     .action-dropdown-content a:hover, .action-dropdown-content button:hover {
-        background-color: 
+        background-color: #f1f3f5;
     }
     .action-dropdown-content hr {
         margin: 4px 0;
         border: 0;
-        border-top: 1px solid 
+        border-top: 1px solid #eee;
     }
     .action-dropdown:hover .action-dropdown-content {
         display: block;
     }
 
-    
+    /* Prevent clipping of dropdown menus in table container */
     @media (min-width: 768px) {
         .box-body.table-responsive {
             overflow: visible !important;
@@ -119,12 +119,12 @@
                         </td>
                         <td style="text-align: center;">
                             <div style="display: flex; gap: 5px; justify-content: center; align-items: center;">
-                                
+                                <!-- Kelola Kamar (Main Action) -->
                                 <a href="{{ route('pengelola.kost.kamar', $kost->id) }}" class="btn-custom btn-primary-custom btn-sm" style="background-color: #605ca8; border-color: #605ca8; font-weight: 600; padding: 6px 12px;">
                                     <i class="fa-solid fa-bed"></i> Kamar ({{ $kost->kamars->count() }})
                                 </a>
 
-                                
+                                <!-- Dropdown Button "Lainnya" -->
                                 <div class="action-dropdown">
                                     <button class="btn-custom btn-sm" style="background-color: #f4f4f4; border: 1px solid #ddd; color: #333; font-weight: 600; padding: 6px 12px;">
                                         Lainnya <i class="fa fa-caret-down"></i>

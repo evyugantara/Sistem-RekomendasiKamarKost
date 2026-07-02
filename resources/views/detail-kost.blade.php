@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $kost->name }} - Detail Kost</title>
 
-    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    
+    <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLEo=" crossorigin=""></script>
 
-    
+    <!-- Custom Style CSS -->
     <link rel="stylesheet" href="{{ asset('css/dashboard-style.css') }}?v={{ time() }}">
 
-    
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        
+        /* ===== LAYOUT ===== */
         .detail-wrapper {
             max-width: 1180px;
             margin: 28px auto;
@@ -30,10 +30,10 @@
             align-items: start;
         }
 
-        
+        /* ===== CARD ===== */
         .detail-card {
-            background: 
-            border: 1px solid 
+            background: #fff;
+            border: 1px solid #e2e8f0;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
@@ -41,27 +41,27 @@
         }
         .detail-card-header {
             padding: 12px 16px;
-            border-bottom: 1px solid 
+            border-bottom: 1px solid #f1f5f9;
             display: flex;
             align-items: center;
             gap: 8px;
-            background: 
+            background: #fafbfc;
         }
         .detail-card-header h3 {
             margin: 0;
             font-size: 14px;
             font-weight: 700;
-            color: 
+            color: #334155;
         }
         .detail-card-header i {
-            color: 
+            color: #3c8dbc;
             font-size: 14px;
         }
         .detail-card-body {
             padding: 16px;
         }
 
-        
+        /* ===== FOTO GALERI ===== */
         .kost-main-img {
             width: 100%;
             height: 280px;
@@ -73,8 +73,8 @@
             display: flex;
             gap: 8px;
             padding: 10px 12px;
-            background: 
-            border-top: 1px solid 
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
             overflow-x: auto;
         }
         .kost-thumbs img {
@@ -87,23 +87,23 @@
             transition: border-color 0.2s;
             flex-shrink: 0;
         }
-        .kost-thumbs img:hover { border-color: 
+        .kost-thumbs img:hover { border-color: #3c8dbc; }
 
-        
+        /* ===== KAMAR CARD ===== */
         .kamar-item {
             display: flex;
             gap: 12px;
             padding: 12px;
-            border: 1px solid 
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            background: 
+            background: #fff;
             transition: all 0.2s;
             margin-bottom: 10px;
         }
         .kamar-item:last-child { margin-bottom: 0; }
         .kamar-item.active {
-            border-color: 
-            background: 
+            border-color: #3c8dbc;
+            background: #f0f7fd;
             box-shadow: 0 0 0 3px rgba(60,141,188,0.12);
         }
         .kamar-thumb {
@@ -112,55 +112,55 @@
             border-radius: 6px;
             object-fit: cover;
             flex-shrink: 0;
-            border: 1px solid 
+            border: 1px solid #e2e8f0;
         }
         .kamar-info { flex: 1; }
         .kamar-name {
             font-size: 15px;
             font-weight: 700;
-            color: 
+            color: #1e293b;
             margin: 0 0 4px 0;
         }
         .kamar-price {
             font-size: 15px;
             font-weight: 700;
-            color: 
+            color: #16a34a;
         }
-        .kamar-price span { font-size: 11px; font-weight: 400; color: 
+        .kamar-price span { font-size: 11px; font-weight: 400; color: #64748b; }
         .kamar-attr-tag {
             display: inline-block;
             font-size: 10.5px;
-            background: 
-            color: 
+            background: #f1f5f9;
+            color: #475569;
             padding: 2px 7px;
             border-radius: 99px;
-            border: 1px solid 
+            border: 1px solid #e2e8f0;
             margin: 2px 2px 0 0;
         }
 
-        
+        /* ===== PETA ===== */
         .map-info-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: 
-            border: 1px solid 
+            background: #f0f7fd;
+            border: 1px solid #bfdbfe;
             border-radius: 7px;
             padding: 10px 14px;
             margin-bottom: 12px;
             font-size: 13px;
-            color: 
+            color: #334155;
         }
         .map-distance {
             font-weight: 700;
-            color: 
+            color: #3c8dbc;
             font-size: 15px;
         }
-        
+        #kostMap {
             width: 100%;
             height: 260px;
             border-radius: 8px;
-            border: 1px solid 
+            border: 1px solid #e2e8f0;
         }
         .map-btn-group {
             display: grid;
@@ -170,135 +170,135 @@
         }
         .btn-map-blue {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: 
+            background: #4285F4; color: #fff !important;
             padding: 11px 12px; border-radius: 7px;
             font-size: 13px; font-weight: 600;
             text-decoration: none;
             transition: all 0.2s;
             box-shadow: 0 1px 4px rgba(66,133,244,0.3);
         }
-        .btn-map-blue:hover { background: 
+        .btn-map-blue:hover { background: #3472d8; transform: translateY(-1px); text-decoration: none; }
         .btn-map-green {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: 
+            background: #16a34a; color: #fff !important;
             padding: 11px 12px; border-radius: 7px;
             font-size: 13px; font-weight: 600;
             text-decoration: none;
             transition: all 0.2s;
             box-shadow: 0 1px 4px rgba(22,163,74,0.3);
         }
-        .btn-map-green:hover { background: 
+        .btn-map-green:hover { background: #15803d; transform: translateY(-1px); text-decoration: none; }
 
-        
+        /* ===== STICKY PANEL KANAN ===== */
         .sticky-panel {
             position: sticky;
             top: 76px;
         }
 
-        
+        /* ===== NAMA & HARGA ===== */
         .kost-title-panel {
             padding: 18px 16px 14px;
-            border-bottom: 1px solid 
+            border-bottom: 1px solid #f1f5f9;
         }
         .kost-title-panel h1 {
             font-size: 20px;
             font-weight: 800;
-            color: 
+            color: #0f172a;
             margin: 0 0 6px 0;
             line-height: 1.3;
         }
         .kost-address-small {
             font-size: 12.5px;
-            color: 
+            color: #64748b;
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
-        
+        /* Kamar Terpilih box */
         .selected-kamar-box {
             margin: 12px 16px;
             padding: 10px 14px;
             border-radius: 8px;
-            border-left: 4px solid 
-            background: 
-            border: 1px solid 
-            border-left: 4px solid 
+            border-left: 4px solid #3c8dbc;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-left: 4px solid #3c8dbc;
         }
         .selected-kamar-label {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            color: 
+            color: #64748b;
             display: block;
             margin-bottom: 3px;
         }
         .selected-kamar-name {
             font-size: 16px;
             font-weight: 700;
-            color: 
+            color: #1d4ed8;
             display: block;
         }
 
-        
+        /* Harga box */
         .price-display-box {
             margin: 0 16px 14px;
             padding: 12px 14px;
-            background: linear-gradient(135deg, 
-            border: 1px solid 
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #86efac;
             border-radius: 8px;
         }
-        .price-label-sm { font-size: 11px; color: 
+        .price-label-sm { font-size: 11px; color: #64748b; display: block; margin-bottom: 2px; }
         .price-value-lg {
             font-size: 22px;
             font-weight: 800;
-            color: 
+            color: #15803d;
         }
-        .price-value-lg span { font-size: 12px; font-weight: 400; color: 
+        .price-value-lg span { font-size: 12px; font-weight: 400; color: #64748b; }
 
-        
+        /* Tombol aksi */
         .action-btns { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 8px; }
         .btn-wa {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: 
+            background: #25d366; color: #fff !important;
             padding: 11px 16px; border-radius: 7px;
             font-size: 14px; font-weight: 700;
             text-decoration: none; border: none; cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-wa:hover { background: 
+        .btn-wa:hover { background: #1fba57; text-decoration: none; }
         .btn-telp {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: 
+            background: #3c8dbc; color: #fff !important;
             padding: 11px 16px; border-radius: 7px;
             font-size: 14px; font-weight: 700;
             text-decoration: none; border: none; cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-telp:hover { background: 
+        .btn-telp:hover { background: #31729b; text-decoration: none; }
         .btn-fav {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: 
+            background: #fff; color: #dc2626 !important;
             padding: 10px 16px; border-radius: 7px;
             font-size: 13.5px; font-weight: 600;
-            text-decoration: none; border: 1px solid 
+            text-decoration: none; border: 1px solid #fca5a5; cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-fav:hover { background: 
+        .btn-fav:hover { background: #fff5f5; text-decoration: none; }
         .btn-fav-active {
-            background: 
-            border: 1px solid 
+            background: #fef2f2; color: #dc2626 !important;
+            border: 1px solid #dc2626;
         }
         .btn-disabled {
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: 
+            background: #f1f5f9; color: #94a3b8 !important;
             padding: 11px 16px; border-radius: 7px;
             font-size: 13.5px; font-weight: 600;
-            text-decoration: none; border: 1px solid 
+            text-decoration: none; border: 1px solid #e2e8f0; cursor: not-allowed;
         }
 
-        
+        /* ===== SPESIFIKASI ===== */
         .spec-section {
             margin-bottom: 14px;
         }
@@ -310,38 +310,38 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.6px;
-            color: 
+            color: #64748b;
             padding: 8px 16px;
-            background: 
-            border-top: 1px solid 
-            border-bottom: 1px solid 
+            background: #f8fafc;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
         }
         .spec-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 7px 16px;
-            border-bottom: 1px solid 
+            border-bottom: 1px solid #f8fafc;
             font-size: 13px;
         }
         .spec-row:last-child { border-bottom: none; }
-        .spec-key { color: 
-        .spec-val { font-weight: 600; color: 
+        .spec-key { color: #64748b; }
+        .spec-val { font-weight: 600; color: #1e293b; text-align: right; max-width: 55%; }
         .badge-yes {
-            background: 
-            border: 1px solid 
+            background: #dcfce7; color: #16a34a;
+            border: 1px solid #86efac;
             padding: 2px 8px; border-radius: 99px;
             font-size: 11.5px; font-weight: 600;
         }
         .badge-no {
-            background: 
-            border: 1px solid 
+            background: #fee2e2; color: #dc2626;
+            border: 1px solid #fca5a5;
             padding: 2px 8px; border-radius: 99px;
             font-size: 11.5px; font-weight: 600;
         }
         .badge-neutral {
-            background: 
-            border: 1px solid 
+            background: #f1f5f9; color: #475569;
+            border: 1px solid #e2e8f0;
             padding: 2px 8px; border-radius: 99px;
             font-size: 11.5px; font-weight: 600;
         }
@@ -354,7 +354,7 @@
 </head>
 <body style="background-color: #f1f5f9;">
 
-    
+    <!-- Navbar -->
     <nav class="guest-navbar">
         <div class="brand">
             <i class="fa-solid fa-house-laptop" style="color:#3c8dbc;"></i> KOST MAHASISWA CBF
@@ -378,10 +378,10 @@
 
     <main class="detail-wrapper">
 
-        
+        <!-- ===== KOLOM KIRI ===== -->
         <div>
 
-            
+            <!-- Galeri Foto -->
             <div class="detail-card">
                 <img src="{{ asset($kost->fotoUtama()) }}" id="mainPhoto" class="kost-main-img" alt="{{ $kost->name }}">
                 @if($kost->fotos->count() > 1)
@@ -393,7 +393,7 @@
                 @endif
             </div>
 
-            
+            <!-- Deskripsi -->
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="fa-solid fa-file-lines"></i>
@@ -404,7 +404,7 @@
                 </div>
             </div>
 
-            
+            <!-- Daftar Kamar -->
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="fa-solid fa-bed"></i>
@@ -462,7 +462,7 @@
                 </div>
             </div>
 
-            
+            <!-- Peta Lokasi -->
             <div class="detail-card">
                 <div class="detail-card-header">
                     <i class="fa-solid fa-map-location-dot"></i>
@@ -501,11 +501,11 @@
 
         </div>
 
-        
+        <!-- ===== KOLOM KANAN (STICKY) ===== -->
         <div class="sticky-panel">
             <div class="detail-card" style="margin-bottom:0;">
 
-                
+                <!-- Judul Kost -->
                 <div class="kost-title-panel">
                     <h1>{{ $kost->name }}</h1>
                     <p class="kost-address-small">
@@ -514,7 +514,7 @@
                     </p>
                 </div>
 
-                
+                <!-- Kamar Terpilih -->
                 @if($highlightedKamar)
                     <div style="padding: 12px 16px 0;">
                         <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#94a3b8; margin:0 0 3px 0;">Kamar Terpilih</p>
@@ -528,7 +528,7 @@
                     <hr style="border:none; border-top:1px solid #f1f5f9; margin: 12px 0 0 0;">
                 @endif
 
-                
+                <!-- Harga -->
                 <div style="padding: 12px 16px 10px;">
                     <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.7px; color:#94a3b8; margin:0 0 3px 0;">Harga Sewa per Bulan</p>
                     <p style="font-size:22px; font-weight:800; color:#1e293b; margin:0;">
@@ -538,7 +538,7 @@
                 </div>
                 <hr style="border:none; border-top:1px solid #f1f5f9; margin: 0;">
 
-                
+                <!-- Tombol Aksi -->
                 <div class="action-btns">
                     @auth
                         @if(auth()->user()->role === 'mahasiswa')
@@ -546,13 +546,7 @@
                                 <a href="{{ route('mahasiswa.contact', [$highlightedKamar->id, 'whatsapp']) }}" class="btn-wa" target="_blank">
                                     <i class="fa-brands fa-whatsapp" style="font-size:18px;"></i> Hubungi via WhatsApp
                                 </a>
-                                <a href="{{ route('mahasiswa.contact', [$highlightedKamar->id, 'phone']) }}" class="btn-telp">
-                                    <i class="fa-solid fa-phone"></i> Hubungi via Telepon
-                                </a>
-                                <button id="btnFav" class="btn-fav {{ $isFavorit ? 'btn-fav-active' : '' }}">
-                                    <i class="fa-solid fa-heart"></i>
-                                    <span id="favText">{{ $isFavorit ? 'Hapus dari Favorit' : 'Simpan ke Favorit' }}</span>
-                                </button>
+
                             @else
                                 <div class="btn-disabled"><i class="fa-solid fa-ban"></i> Pilih kamar terlebih dahulu</div>
                             @endif
@@ -566,10 +560,10 @@
                     @endauth
                 </div>
 
-                
+                <!-- ===== SPESIFIKASI ===== -->
                 <div style="border-top: 2px solid #f1f5f9; margin-top: 4px;">
 
-                    
+                    <!-- Kriteria Umum -->
                     <div class="spec-section">
                         <div class="spec-section-header">
                             <i class="fa-solid fa-sliders"></i> Kriteria Umum
@@ -588,7 +582,7 @@
                         </div>
                     </div>
 
-                    
+                    <!-- Fasilitas Pribadi -->
                     <div class="spec-section">
                         <div class="spec-section-header">
                             <i class="fa-solid fa-bed"></i> Fasilitas Pribadi (Dalam Kamar)
@@ -603,7 +597,7 @@
                         @endforelse
                     </div>
 
-                    
+                    <!-- Fasilitas Bersama -->
                     <div class="spec-section" style="margin-bottom:0;">
                         <div class="spec-section-header">
                             <i class="fa-solid fa-users"></i> Fasilitas Bersama
@@ -625,10 +619,6 @@
 
     </main>
 
-    
-    <footer style="background-color: #1e293b; color: #94a3b8; padding: 18px; text-align: center; font-size: 13px; margin-top: 30px;">
-        &copy; 2026 Sistem Rekomendasi Kost Mahasiswa Berbasis Web &mdash; Content-Based Filtering (UNSUR)
-    </footer>
 
     <script>
         function changePhoto(src) {
@@ -690,30 +680,7 @@
             map.fitBounds([[kostLat, kostLng], [campusLat, campusLng]], { padding: [40, 40] });
         });
 
-        @auth
-            @if(auth()->user()->role === 'mahasiswa')
-                @if($highlightedKamar)
-                    document.getElementById('btnFav').addEventListener('click', function() {
-                        var btn = this;
-                        fetch("{{ route('mahasiswa.favorit.toggle', $highlightedKamar->id) }}", {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
-                        })
-                        .then(r => r.json())
-                        .then(data => {
-                            if (data.status === 'added') {
-                                btn.classList.add('btn-fav-active');
-                                document.getElementById('favText').innerText = 'Hapus dari Favorit';
-                            } else {
-                                btn.classList.remove('btn-fav-active');
-                                document.getElementById('favText').innerText = 'Simpan ke Favorit';
-                            }
-                            Swal.fire({ icon: 'success', title: 'Status Favorit', text: data.message, confirmButtonColor: '#3c8dbc' });
-                        });
-                    });
-                @endif
-            @endif
-        @endauth
+
     </script>
 </body>
 </html>

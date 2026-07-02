@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function () {
         
         Route::get('/pengguna', [AdminController::class, 'pengguna'])->name('admin.pengguna');
         Route::post('/pengguna/{id}/toggle', [AdminController::class, 'toggleStatus'])->name('admin.pengguna.toggle');
+        Route::post('/pengguna/{id}/update', [AdminController::class, 'updatePengguna'])->name('admin.pengguna.update');
+        Route::post('/pengguna/{id}/hapus', [AdminController::class, 'hapusPengguna'])->name('admin.pengguna.hapus');
         
         Route::get('/pengajuan', [AdminController::class, 'pengajuan'])->name('admin.pengajuan');
         Route::post('/pengajuan/{id}/verifikasi', [AdminController::class, 'verifikasiPengelola'])->name('admin.pengajuan.verifikasi');

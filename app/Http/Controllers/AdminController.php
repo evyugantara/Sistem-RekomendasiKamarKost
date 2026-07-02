@@ -8,6 +8,7 @@ use App\Models\OpsiKriteria;
 use App\Models\Kost;
 use App\Models\LogKontak;
 use App\Models\LogRekomendasi;
+use App\Models\LogVerifikasiPengelola;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -102,6 +103,48 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Akun ' . $user->name . ' berhasil ' . $statusMsg . '.');
     }
 
+    public function updatePengguna(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role === 'admin') {
+            return redirect()->back()->with('error', 'Akun administrator utama tidak dapat diubah.');
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:6',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->status = $request->status;
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.pengguna')->with('success', 'Detail akun ' . $user->name . ' berhasil diperbarui!');
+    }
+
+    public function hapusPengguna($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role === 'admin') {
+            return redirect()->back()->with('error', 'Akun administrator utama tidak dapat dihapus.');
+        }
+
+        $name = $user->name;
+        $user->delete();
+
+        return redirect()->route('admin.pengguna')->with('success', 'Akun ' . $name . ' berhasil dihapus dari sistem.');
+    }
+
     
     public function kriteria()
     {
@@ -190,7 +233,9 @@ class AdminController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('admin.pengajuan', compact('pengajuans'));
+        $riwayats = LogVerifikasiPengelola::orderBy('created_at', 'desc')->get();
+
+        return view('admin.pengajuan', compact('pengajuans', 'riwayats'));
     }
 
     
@@ -257,6 +302,15 @@ class AdminController extends Controller
         $username = $user->username;
 
         if ($action === 'approve') {
+            LogVerifikasiPengelola::create([
+                'admin_name' => auth()->user()->name,
+                'owner_name' => $user->name,
+                'owner_email' => $user->email,
+                'owner_phone' => $user->profilPengelola->phone ?? '-',
+                'kost_name' => $user->kosts->first()->name ?? '-',
+                'status' => 'approved',
+            ]);
+
             $user->status = 'active';
             $user->save();
 
@@ -275,12 +329,20 @@ class AdminController extends Controller
             return redirect()->route('admin.pengajuan')
                 ->with('success', 'Pendaftaran pengelola "' . $name . '" telah disetujui. Akun sekarang aktif.');
         } elseif ($action === 'reject') {
+            LogVerifikasiPengelola::create([
+                'admin_name' => auth()->user()->name,
+                'owner_name' => $user->name,
+                'owner_email' => $user->email,
+                'owner_phone' => $user->profilPengelola->phone ?? '-',
+                'kost_name' => $user->kosts->first()->name ?? '-',
+                'status' => 'rejected',
+            ]);
+
             if ($phone) {
                 $message = "Halo " . $name . ", mohon maaf, pendaftaran Anda sebagai pengelola kost di KOST-CBF belum dapat kami setujui karena berkas/dokumen KTP yang dilampirkan tidak sesuai. Silakan melakukan registrasi ulang dengan data yang benar. Terima kasih.";
                 $this->sendWhatsAppViaFonnte($phone, $message);
             }
 
-            
             $user->delete();
 
             if ($request->ajax() || $request->wantsJson()) {

@@ -95,6 +95,64 @@
         </table>
     </div>
 </div>
+
+<div class="box box-primary" style="margin-top: 25px;">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Verifikasi Pengelola</h3>
+    </div>
+    <div class="box-body table-responsive">
+        <table class="table-custom">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">No</th>
+                    <th>Identitas Pengelola</th>
+                    <th>Nama Kost Diajukan</th>
+                    <th style="width: 150px; text-align: center;">Status Keputusan</th>
+                    <th style="width: 180px;">Diverifikasi Oleh / Tanggal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($riwayats as $index => $r)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>
+                            <strong>{{ $r->owner_name }}</strong><br>
+                            <span style="font-size: 12px; color: #334155;"><i class="fa-solid fa-envelope"></i> {{ $r->owner_email }}</span><br>
+                            <span style="font-size: 12px; color: #334155;"><i class="fa-solid fa-phone"></i> {{ $r->owner_phone ?? '-' }}</span>
+                        </td>
+                        <td>
+                            <strong style="font-size: 13.5px; color: var(--primary-color);">{{ $r->kost_name ?? '-' }}</strong>
+                        </td>
+                        <td style="text-align: center;">
+                            @if($r->status === 'approved')
+                                <span class="badge badge-success" style="padding: 5px 12px; font-weight: bold; border-radius: 20px;">
+                                    <i class="fa-solid fa-check-circle"></i> Disetujui
+                                </span>
+                            @else
+                                <span class="badge badge-danger" style="padding: 5px 12px; font-weight: bold; border-radius: 20px;">
+                                    <i class="fa-solid fa-times-circle"></i> Ditolak
+                                </span>
+                            @endif
+                        </td>
+                        <td>
+                            <span style="font-size: 12.5px; color: #334155; font-weight: 500;">Admin: {{ $r->admin_name }}</span><br>
+                            <span style="font-size: 11.5px; color: #64748b;"><i class="fa-regular fa-calendar"></i> {{ $r->created_at->format('d M Y, H:i') }} WIB</span>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #64748b; padding: 40px 15px;">
+                            <div style="font-size: 40px; color: #cbd5e1; margin-bottom: 12px;">
+                                <i class="fa-solid fa-history"></i>
+                            </div>
+                            <span style="font-size: 14px; font-weight: 500;">Belum ada riwayat keputusan verifikasi pengelola.</span>
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection
 
 @section('scripts')

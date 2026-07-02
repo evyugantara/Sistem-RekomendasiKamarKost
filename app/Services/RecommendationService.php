@@ -105,11 +105,13 @@ class RecommendationService
             }
 
             
-            $hargaOpsiId = $this->getHargaSewaOpsiId($kamar->price, $hargaOptions);
-            if ($hargaOpsiId && isset($optionIndexMap[$hargaOpsiId])) {
-                $idx = $optionIndexMap[$hargaOpsiId];
-                $vectorK[$idx] = 1;
-                $kamarDetails[] = $optionNameMap[$hargaOpsiId];
+            $hargaOpsiIds = $this->getHargaSewaOpsiIds($kamar->price, $hargaOptions);
+            foreach ($hargaOpsiIds as $opsiId) {
+                if (isset($optionIndexMap[$opsiId])) {
+                    $idx = $optionIndexMap[$opsiId];
+                    $vectorK[$idx] = 1;
+                    $kamarDetails[] = $optionNameMap[$opsiId];
+                }
             }
 
             
@@ -173,23 +175,63 @@ class RecommendationService
     }
 
     
-    private function getHargaSewaOpsiId($price, $hargaOptions)
+    private function getHargaSewaOpsiIds($price, $hargaOptions)
     {
+        $matchedIds = [];
         foreach ($hargaOptions as $option) {
-            $val = trim($option->value);
-            if ($val === '< 500 Ribu' && $price < 500000) {
-                return $option->id;
+            $parsed = $this->parseRangeValue($option->value);
+            if (!$parsed) {
+                continue;
             }
-            if ($val === '500 Ribu - 1 Juta' && $price >= 500000 && $price <= 1000000) {
-                return $option->id;
-            }
-            if ($val === '1 Juta - 1.5 Juta' && $price > 1000000 && $price <= 1500000) {
-                return $option->id;
-            }
-            if ($val === '> 1.5 Juta' && $price > 1500000) {
-                return $option->id;
+
+            if ($parsed['type'] === 'lt' && $price < $parsed['val']) {
+                $matchedIds[] = $option->id;
+            } elseif ($parsed['type'] === 'gt' && $price > $parsed['val']) {
+                $matchedIds[] = $option->id;
+            } elseif ($parsed['type'] === 'range' && $price >= $parsed['min'] && $price <= $parsed['max']) {
+                $matchedIds[] = $option->id;
             }
         }
+        return $matchedIds;
+    }
+
+    private function parseRangeValue($val)
+    {
+        $val = strtolower(trim($val));
+        $val = str_replace(',', '.', $val);
+
+        $convertToNum = function($str) {
+            $str = trim($str);
+            $multiplier = 1;
+            if (strpos($str, 'ribu') !== false) {
+                $multiplier = 1000;
+                $str = str_replace('ribu', '', $str);
+            } elseif (strpos($str, 'juta') !== false) {
+                $multiplier = 1000000;
+                $str = str_replace('juta', '', $str);
+            }
+            return (float)$str * $multiplier;
+        };
+
+        if (strpos($val, '<') === 0) {
+            $num = $convertToNum(substr($val, 1));
+            return ['type' => 'lt', 'val' => $num];
+        }
+
+        if (strpos($val, '>') === 0) {
+            $num = $convertToNum(substr($val, 1));
+            return ['type' => 'gt', 'val' => $num];
+        }
+
+        if (strpos($val, '-') !== false) {
+            $parts = explode('-', $val);
+            if (count($parts) === 2) {
+                $min = $convertToNum($parts[0]);
+                $max = $convertToNum($parts[1]);
+                return ['type' => 'range', 'min' => $min, 'max' => $max];
+            }
+        }
+
         return null;
     }
 }
