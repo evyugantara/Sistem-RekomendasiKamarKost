@@ -30,7 +30,7 @@ class RecommendationServiceTest extends TestCase
         
         $this->service = new RecommendationService();
 
-        // Siapkan ReflectionMethod untuk method private
+     
         $this->parseRangeMethod = new ReflectionMethod(RecommendationService::class, 'parseRangeValue');
         $this->parseRangeMethod->setAccessible(true);
 
@@ -49,21 +49,21 @@ class RecommendationServiceTest extends TestCase
 
     public function test_it_can_parse_dash_range_strings_with_ribu_and_juta()
     {
-        // Uji "400 Ribu - 600 Ribu"
+       
         $parsed1 = $this->parseRangeMethod->invoke($this->service, '400 Ribu - 600 Ribu');
         $this->assertNotNull($parsed1);
         $this->assertEquals('range', $parsed1['type']);
         $this->assertEquals(400000, $parsed1['min']);
         $this->assertEquals(600000, $parsed1['max']);
 
-        // Uji "500 Ribu - 1 Juta"
+    
         $parsed2 = $this->parseRangeMethod->invoke($this->service, '500 Ribu - 1 Juta');
         $this->assertNotNull($parsed2);
         $this->assertEquals('range', $parsed2['type']);
         $this->assertEquals(500000, $parsed2['min']);
         $this->assertEquals(1000000, $parsed2['max']);
 
-        // Uji "1 Juta - 1,5 Juta" (Koma)
+       
         $parsed3 = $this->parseRangeMethod->invoke($this->service, '1 Juta - 1,5 Juta');
         $this->assertNotNull($parsed3);
         $this->assertEquals('range', $parsed3['type']);
@@ -73,7 +73,7 @@ class RecommendationServiceTest extends TestCase
 
     public function test_it_can_match_price_correctly_to_multiple_overlapping_ranges()
     {
-        // Mock opsi kriteria harga sewa
+     
         $optLessThan500 = new OpsiKriteria();
         $optLessThan500->id = 101;
         $optLessThan500->value = '< 500 Ribu';
@@ -97,7 +97,7 @@ class RecommendationServiceTest extends TestCase
             $optRange500to800
         ]);
 
-        // Uji Harga Rp 500.000
+       
         $matchedIds = $this->getOpsiIdsMethod->invoke($this->service, 500000, $hargaOptions);
         
         $this->assertContains(102, $matchedIds);
@@ -105,7 +105,7 @@ class RecommendationServiceTest extends TestCase
         $this->assertContains(104, $matchedIds);
         $this->assertNotContains(101, $matchedIds);
 
-        // Uji Harga Rp 300.000
+       
         $matchedIds2 = $this->getOpsiIdsMethod->invoke($this->service, 300000, $hargaOptions);
         
         $this->assertContains(101, $matchedIds2);
@@ -125,7 +125,7 @@ class RecommendationServiceTest extends TestCase
 
     public function test_it_can_generate_recommendations_ordered_by_similarity_score()
     {
-        // 1. Buat data Mahasiswa (Penghuni)
+      
         $student = User::create([
             'name' => 'Test Student',
             'username' => 'teststudent',
@@ -135,7 +135,7 @@ class RecommendationServiceTest extends TestCase
             'status' => 'active'
         ]);
 
-        // 2. Buat data Pengelola & Profil Pengelola
+       
         $owner = User::create([
             'name' => 'Test Owner',
             'username' => 'testowner',
@@ -151,7 +151,7 @@ class RecommendationServiceTest extends TestCase
             'address' => 'Owner Address'
         ]);
 
-        // 3. Buat data Kampus
+       
         $campus = Kampus::create([
             'name' => 'Test Campus',
             'address' => 'Campus Address',
@@ -159,7 +159,7 @@ class RecommendationServiceTest extends TestCase
             'longitude' => 107.14090
         ]);
 
-        // 4. Buat data Kost
+        
         $kost = Kost::create([
             'user_id' => $owner->id,
             'kampus_id' => $campus->id,
@@ -170,7 +170,7 @@ class RecommendationServiceTest extends TestCase
             'longitude' => 107.14090
         ]);
 
-        // 5. Buat data Kriterias dan OpsiKriterias
+        
         $kriteriaHarga = Kriteria::create(['name' => 'Harga Sewa', 'type' => 'select', 'category' => 'umum']);
         $opsiHarga = OpsiKriteria::create(['kriteria_id' => $kriteriaHarga->id, 'value' => '500 Ribu - 1 Juta']);
 
@@ -181,7 +181,7 @@ class RecommendationServiceTest extends TestCase
         $kriteriaWifi = Kriteria::create(['name' => 'Fasilitas Wi-Fi', 'type' => 'checkbox', 'category' => 'bersama']);
         $opsiWifi = OpsiKriteria::create(['kriteria_id' => $kriteriaWifi->id, 'value' => 'Ada Wi-Fi']);
 
-        // 6. Set user preferences (Memilih Listrik Token & Ada Wi-Fi)
+        
         PreferensiMahasiswa::create([
             'user_id' => $student->id,
             'kriteria_id' => $kriteriaListrik->id,
@@ -193,7 +193,7 @@ class RecommendationServiceTest extends TestCase
             'opsi_kriteria_id' => $opsiWifi->id
         ]);
 
-        // 7. Buat Kamar A (sangat cocok: ada Listrik Token & Ada Wi-Fi)
+        
         $kamarA = Kamar::create([
             'kost_id' => $kost->id,
             'name' => 'Kamar A',
@@ -211,7 +211,7 @@ class RecommendationServiceTest extends TestCase
             'opsi_kriteria_id' => $opsiWifi->id
         ]);
 
-        // 8. Buat Kamar B (kurang cocok: ada Listrik Bulanan, dan tidak ada Wi-Fi)
+      
         $kamarB = Kamar::create([
             'kost_id' => $kost->id,
             'name' => 'Kamar B',
@@ -224,13 +224,13 @@ class RecommendationServiceTest extends TestCase
             'opsi_kriteria_id' => $opsiBulanan->id
         ]);
 
-        // Jalankan rekomendasi
+     
         $results = $this->service->getRecommendations($student->id);
 
         $this->assertNotEmpty($results);
         $this->assertCount(2, $results);
 
-        // Kamar A harus berada di urutan pertama (Rank 1) karena tingkat kemiripannya lebih tinggi dari Kamar B
+        
         $this->assertEquals($kamarA->id, $results[0]['kamar']->id);
         $this->assertGreaterThan($results[1]['similarity'], $results[0]['similarity']);
         $this->assertEquals($kamarB->id, $results[1]['kamar']->id);
