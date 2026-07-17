@@ -20,7 +20,7 @@ class TestRecommendation extends Command
     {
       
 
-        // 1. Ambil seluruh kriteria asli dari database (total kriteria, misal 16 kriteria)
+        
         $kriterias = Kriteria::orderBy('id')->get();
         $kriteriaCount = $kriterias->count();
 
@@ -29,7 +29,7 @@ class TestRecommendation extends Command
             return 1;
         }
 
-        // 2. Tentukan User/Mahasiswa yang akan diuji
+        
         $userId = $this->argument('userId');
         $user = null;
 
@@ -54,7 +54,7 @@ class TestRecommendation extends Command
             return 1;
         }
 
-        // 3. Bangun data preferensi terpilih per Kriteria (hanya 1 opsi terpilih per kriteria)
+        
         $prefOptions = [];
         $isSimulated = false;
 
@@ -69,7 +69,7 @@ class TestRecommendation extends Command
             if ($pref) {
                 $prefOptions[$kriteria->id] = $pref->opsiKriteria;
             } else {
-                // Gunakan opsi tiruan/simulasi jika user belum mengisi
+              
                 $defaultOpsi = OpsiKriteria::where('kriteria_id', $kriteria->id)
                     ->where(function($q) {
                         $q->where('value', 'like', '%Campur%')
@@ -102,7 +102,7 @@ class TestRecommendation extends Command
             }
         }
 
-        // TAHAP 1: PEMBENTUKAN VEKTOR PREFERENSI PENGHUNI
+        
         $this->warn("\n1. Implementasi Pembentukan Vektor Preferensi Penghuni");
         $this->line(" ➜ Nama Penghuni : " . $user->name . " (ID: " . $user->id . ")");
         if ($isSimulated) {
@@ -111,10 +111,10 @@ class TestRecommendation extends Command
             $this->line(" ➜ Preferensi dibentuk dari kriteria yang dipilih penghuni.");
         }
 
-        // Vektor Preferensi P (selalu bernilai 1 karena ini adalah target yang diinginkan user)
+       
         $vectorP = array_fill(0, $kriteriaCount, 1);
 
-        // Tampilkan Tabel Preferensi Vektor A (Penghuni)
+       
         $prefHeaders = ['No', 'Kriteria', 'Preferensi Terpilih (Atribut)', 'Nilai Biner (P)'];
         $prefRows = [];
         $idx = 0;
@@ -130,7 +130,7 @@ class TestRecommendation extends Command
         }
         $this->table($prefHeaders, $prefRows);
 
-        // TAHAP 2: PEMBENTUKAN VEKTOR ATRIBUT KAMAR KOST
+       
         $this->warn("\n2. Implementasi Pembentukan Vektor Atribut Kamar Kost");
 
         // Ambil SELURUH Kamar Tersedia
@@ -162,7 +162,7 @@ class TestRecommendation extends Command
         $getOpsiIdsMethod = new ReflectionMethod(RecommendationService::class, 'getHargaSewaOpsiIds');
         $getOpsiIdsMethod->setAccessible(true);
 
-        // TAHAP 3: PERHITUNGAN COSINE SIMILARITY LANGKAH-PER-LANGKAH (16 DIMENSI)
+        
         $this->warn("\n3. Perhitungan Tingkat Kemiripan (Cosine Similarity) Setiap Kamar");
         
         $this->line("");
@@ -180,7 +180,7 @@ class TestRecommendation extends Command
         $this->line("                   MULAI PERHITUNGAN MANUAL (WHITE BOX TRACING - 16 DIMENSI)                       ");
         $this->line("--------------------------------------------------------------------------------------------------");
 
-        // Hitung Magnitudo P
+        
         $sumP2 = 0;
         $magPTerms = [];
         foreach ($vectorP as $val) {
@@ -194,11 +194,11 @@ class TestRecommendation extends Command
         foreach ($kamars as $kIdx => $kamar) {
             $vectorK = array_fill(0, $kriteriaCount, 0);
 
-            // Dapatkan ID atribut kamar & kost
+         
             $kamarAttrIds = $kamar->atributKamar->pluck('opsi_kriteria_id')->toArray();
             $kostAttrIds = $kamar->kost ? $kamar->kost->atributKost->pluck('opsi_kriteria_id')->toArray() : [];
             
-            // Dapatkan ID atribut harga sewa yang cocok untuk kamar ini
+            
             $matchedHargaOpsiIds = $getOpsiIdsMethod->invoke($service, $kamar->price, $hargaOptions);
 
             $cIdx = 0;
@@ -206,12 +206,12 @@ class TestRecommendation extends Command
                 $targetOpt = $prefOptions[$kriteria->id] ?? null;
                 if ($targetOpt) {
                     if ($kriteria->name === 'Harga Sewa') {
-                        // Untuk harga sewa, cek apakah opsi harga yang cocok mengandung ID target preferensi
+                        
                         if (in_array($targetOpt->id, $matchedHargaOpsiIds)) {
                             $vectorK[$cIdx] = 1;
                         }
                     } else {
-                        // Cek apakah kamar atau kost memiliki opsi kriteria ID target preferensi
+                       
                         if (in_array($targetOpt->id, $kamarAttrIds) || in_array($targetOpt->id, $kostAttrIds)) {
                             $vectorK[$cIdx] = 1;
                         }
@@ -220,7 +220,7 @@ class TestRecommendation extends Command
                 $cIdx++;
             }
 
-            // Perhitungan Matematika Detail
+           
             $dotProduct = 0;
             $dotProductTerms = [];
             for ($i = 0; $i < $kriteriaCount; $i++) {
@@ -229,7 +229,7 @@ class TestRecommendation extends Command
                 $dotProductTerms[] = "({$vectorP[$i]}×{$vectorK[$i]})";
             }
 
-            // Hitung Magnitudo K
+          
             $sumK2 = 0;
             $magKTerms = [];
             foreach ($vectorK as $val) {
@@ -238,10 +238,10 @@ class TestRecommendation extends Command
             }
             $magnitudeK = sqrt($sumK2);
 
-            // Hitung Similarity
+         
             $similarity = ($magnitudeP * $magnitudeK > 0) ? ($dotProduct / ($magnitudeP * $magnitudeK)) : 0;
 
-            // Cetak Detail Kalkulasi Kamar
+            
             $noKamar = $kIdx + 1;
             $this->info("\n{$noKamar}. Perhitungan Cosine Similarity: {$kamar->name} ({$kamar->kost->name})");
             
@@ -275,7 +275,7 @@ class TestRecommendation extends Command
             ];
         }
 
-        // Urutkan Peringkat
+        
         usort($rankingData, function ($a, $b) {
             if ($b['similarity'] == $a['similarity']) {
                 return $a['price'] <=> $b['price'];
@@ -283,7 +283,7 @@ class TestRecommendation extends Command
             return $b['similarity'] <=> $a['similarity'];
         });
 
-        // TAHAP 4: IMPLEMENTASI HASIL PERHITUNGAN
+        
         $this->warn("\n4. Implementasi Hasil Perhitungan");
 
         $this->info("\n--- TABEL HASIL PERHITUNGAN REKOMENDASI (TERURUT KEMIRIPAN TERTINGGI) ---");
