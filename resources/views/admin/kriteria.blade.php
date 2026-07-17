@@ -97,7 +97,7 @@
                 <h3 class="box-title"><i class="fa-solid fa-tags"></i> Opsi Pilihan Kriteria</h3>
             </div>
             <div class="box-body">
-                <p style="color: #666; font-size: 13.5px; margin-bottom: 15px;">Di bawah ini adalah opsi pilihan (atribut) untuk setiap kriteria. Di halaman Mahasiswa dan Pengelola, opsi-opsi ini akan otomatis dirender sebagai **Checkbox Pilihan** yang rapi dan hemat ruang.</p>
+                 <p style="color: #666; font-size: 13.5px; margin-bottom: 15px;">Di bawah ini adalah opsi pilihan (atribut) untuk setiap kriteria. Di halaman Penghuni dan Pengelola, opsi-opsi ini akan otomatis dirender sebagai **Checkbox Pilihan** yang rapi dan hemat ruang.</p>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     @forelse($kriterias as $kr)

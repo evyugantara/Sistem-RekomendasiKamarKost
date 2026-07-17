@@ -20,7 +20,7 @@
                 <div class="form-group" style="margin-bottom: 0;">
                     <select name="role" class="form-control">
                         <option value="">-- Semua Peran --</option>
-                        <option value="mahasiswa" {{ request('role') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                        <option value="mahasiswa" {{ request('role') == 'mahasiswa' ? 'selected' : '' }}>Penghuni</option>
                         <option value="pengelola" {{ request('role') == 'pengelola' ? 'selected' : '' }}>Pengelola Kost</option>
                     </select>
                 </div>
@@ -69,7 +69,7 @@
                         </td>
                         <td>
                             @if($u->role === 'mahasiswa')
-                                <span class="badge badge-info"><i class="fa-solid fa-user-graduate"></i> Mahasiswa</span>
+                                <span class="badge badge-info"><i class="fa-solid fa-user"></i> Penghuni</span>
                             @else
                                 <span class="badge badge-success"><i class="fa-solid fa-user-tie"></i> Pengelola Kost</span>
                             @endif

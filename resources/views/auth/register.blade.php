@@ -17,7 +17,7 @@
 <body class="auth-wrapper" style="align-items: flex-start; padding-top: 50px; padding-bottom: 50px;">
     <div class="auth-box" style="width: 500px; max-width: 100%;">
         <div class="auth-logo">
-            <a href="{{ route('home') }}"><b>KOST MAHASISWA</b> CBF</a>
+            <a href="{{ route('home') }}"><b>RUMAH KOST</b> CBF</a>
         </div>
         
         <p class="msg" style="margin-bottom: 10px;">Daftar akun baru untuk mulai menggunakan sistem</p>
@@ -25,7 +25,7 @@
         
         <div class="auth-tabs">
             <div class="auth-tab active" id="tabMahasiswa" onclick="switchForm('mahasiswa')">
-                <i class="fa-solid fa-user-graduate"></i> Mahasiswa
+                <i class="fa-solid fa-user"></i> Penghuni
             </div>
             <div class="auth-tab" id="tabPengelola" onclick="switchForm('pengelola')">
                 <i class="fa-solid fa-user-tie"></i> Pengelola Kost
@@ -94,7 +94,7 @@
                 </div>
                 
                 <button type="submit" class="btn-custom btn-primary-custom" style="width: 100%; height: 40px; margin-top: 15px; font-weight: bold; border-radius: 4px;">
-                    <i class="fa-solid fa-user-plus"></i> DAFTAR SEBAGAI MAHASISWA
+                    <i class="fa-solid fa-user-plus"></i> DAFTAR SEBAGAI PENGHUNI
                 </button>
             </form>
         </div>

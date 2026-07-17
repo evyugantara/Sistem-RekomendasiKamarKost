@@ -8,7 +8,7 @@
 <div class="box box-primary">
     <div class="box-body" style="padding: 20px;">
         <h2 style="font-weight: 300; margin-bottom: 10px;">Halo Bpk/Ibu, <strong>{{ auth()->user()->name }}</strong>!</h2>
-        <p style="color: #666; font-size: 15px;">Selamat datang di dashboard Pengelola Kost. Di sini Anda dapat menambahkan kost milik Anda, melengkapi spesifikasi kriteria kost secara mendetail, mengunggah galeri foto, serta memantau seberapa banyak mahasiswa yang berminat menghubungi Anda.</p>
+        <p style="color: #666; font-size: 15px;">Selamat datang di dashboard Pengelola Kost. Di sini Anda dapat menambahkan kost milik Anda, melengkapi spesifikasi kriteria kost secara mendetail, mengunggah galeri foto, serta memantau seberapa banyak penghuni yang berminat menghubungi Anda.</p>
     </div>
 </div>
 
@@ -63,14 +63,14 @@
     
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title"><i class="fa-solid fa-bell"></i> Riwayat Mahasiswa Menghubungi Kost Anda</h3>
+            <h3 class="box-title"><i class="fa-solid fa-bell"></i> Riwayat Penghuni Menghubungi Kost Anda</h3>
         </div>
         <div class="box-body table-responsive">
             <table class="table-custom">
                 <thead>
                     <tr>
                         <th style="width: 50px;">No</th>
-                        <th>Nama Mahasiswa</th>
+                        <th>Nama Penghuni</th>
                         <th>Kost yang Dituju</th>
                         <th>Tipe Kontak</th>
                         <th>Tanggal Klik</th>
@@ -103,7 +103,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" style="text-align: center; color: #888; padding: 20px;">Belum ada mahasiswa yang mengklik tombol hubungi pada kost Anda.</td>
+                            <td colspan="5" style="text-align: center; color: #888; padding: 20px;">Belum ada penghuni yang mengklik tombol hubungi pada kost Anda.</td>
                         </tr>
                     @endforelse
                 </tbody>

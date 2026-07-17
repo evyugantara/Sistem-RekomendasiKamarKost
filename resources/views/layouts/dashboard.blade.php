@@ -24,14 +24,12 @@
         
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header" style="font-size: 13.5px; font-weight: bold; white-space: nowrap;">
-                <i class="fa-solid fa-house-laptop"></i> KOST MAHASISWA CBF
+                <i class="fa-solid fa-house-laptop"></i> RUMAH KOST CBF
             </div>
             
             <div class="sidebar-user">
-                <div class="avatar">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
-                </div>
-                <div class="info">
+                <span class="avatar">{{ strtoupper(substr(auth()->user()->name ?? 'P', 0, 1)) }}</span>
+                <div class="user-info">
                     <span class="name">{{ auth()->user()->name ?? 'Pengguna' }}</span>
                     <span class="status">
                         @if(auth()->user()->role == 'admin')
@@ -39,7 +37,7 @@
                         @elseif(auth()->user()->role == 'pengelola')
                             Pengelola Kost
                         @else
-                            Mahasiswa
+                            Penghuni
                         @endif
                     </span>
                 </div>
@@ -118,7 +116,7 @@
                     <li class="{{ Request::is('mahasiswa') ? 'active' : '' }}">
                         <a href="{{ route('mahasiswa.dashboard') }}">
                             <i class="fa-solid fa-gauge"></i>
-                            <span>Dashboard Mahasiswa</span>
+                            <span>Dashboard Penghuni</span>
                         </a>
                     </li>
                     <li class="{{ Request::is('mahasiswa/rekomendasi*') ? 'active' : '' }}">
@@ -130,7 +128,7 @@
                     <li class="{{ Request::is('mahasiswa/profil*') ? 'active' : '' }}">
                         <a href="{{ route('mahasiswa.profil') }}">
                             <i class="fa-solid fa-user-graduate"></i>
-                            <span>Profil Mahasiswa</span>
+                            <span>Profil Penghuni</span>
                         </a>
                     </li>
                 @endif

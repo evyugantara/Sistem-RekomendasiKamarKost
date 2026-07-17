@@ -14,7 +14,7 @@
 <body class="auth-wrapper">
     <div class="auth-box">
         <div class="auth-logo">
-            <a href="{{ route('home') }}"><b>KOST MAHASISWA</b> CBF</a>
+            <a href="{{ route('home') }}"><b>RUMAH KOST</b> CBF</a>
         </div>
         
         <p class="msg">Silakan masuk untuk mengakses sistem rekomendasi</p>

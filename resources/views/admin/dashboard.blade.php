@@ -11,10 +11,10 @@
     <div class="metric-card blue">
         <div class="inner">
             <h3>{{ $totalMahasiswa }}</h3>
-            <p>JML MHS AKTIF</p>
+            <p>JML PENGHUNI AKTIF</p>
         </div>
         <div class="icon">
-            <i class="fa fa-graduation-cap"></i>
+            <i class="fa fa-users"></i>
         </div>
     </div>
     
@@ -57,7 +57,7 @@
     
     <div style="background-color: #fff; border-radius: 3px; border: 1px solid #ddd; padding: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 1px rgba(0,0,0,0.05);">
         <div>
-            <span style="font-size: 11px; font-weight: bold; color: #777; display: block; text-transform: uppercase;">Mhs Status Aktif</span>
+            <span style="font-size: 11px; font-weight: bold; color: #777; display: block; text-transform: uppercase;">Penghuni Status Aktif</span>
             <span style="font-size: 22px; font-weight: bold; color: #333;">{{ $activeMahasiswa }}</span>
         </div>
         <i class="fa-solid fa-user-check" style="font-size: 28px; color: #00c0ef; opacity: 0.7;"></i>
@@ -107,7 +107,7 @@
                 labels: months,
                 datasets: [
                     {
-                        label: 'Pendaftaran Mahasiswa',
+                        label: 'Pendaftaran Penghuni',
                         data: studentData,
                         borderColor: '#00c0ef',
                         backgroundColor: 'rgba(0, 192, 239, 0.1)',

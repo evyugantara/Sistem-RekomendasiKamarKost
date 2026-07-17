@@ -174,6 +174,30 @@ class RecommendationService
         return $results;
     }
 
+
+        
+        public function cosineSimilarity(array $vectorP, array $vectorK): float
+        {
+            $dotProduct = 0;
+            $sumP = 0;
+            $sumK = 0;
+
+            foreach ($vectorP as $i => $value) {
+                $dotProduct += $value * $vectorK[$i];
+                $sumP += $value * $value;
+                $sumK += $vectorK[$i] * $vectorK[$i];
+            }
+
+            if ($sumP == 0 || $sumK == 0) {
+                return 0;
+            }
+
+            return round(
+                $dotProduct / (sqrt($sumP) * sqrt($sumK)),
+                4
+            );
+        }
+
     
     private function getHargaSewaOpsiIds($price, $hargaOptions)
     {

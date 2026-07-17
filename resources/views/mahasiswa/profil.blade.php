@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Profil Mahasiswa')
-@section('header-title', 'Kelola Profil Mahasiswa')
+@section('title', 'Profil Penghuni')
+@section('header-title', 'Kelola Profil Penghuni')
 @section('breadcrumb-active', 'Profil Saya')
 
 @section('content')

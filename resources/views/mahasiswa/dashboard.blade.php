@@ -1,14 +1,14 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Dashboard Mahasiswa')
-@section('header-title', 'Dashboard Mahasiswa')
+@section('title', 'Dashboard Penghuni')
+@section('header-title', 'Dashboard Penghuni')
 @section('breadcrumb-active', 'Dashboard')
 
 @section('content')
 <div class="box box-primary" style="margin-bottom: 20px;">
     <div class="box-body" style="padding: 20px;">
         <h2 style="font-weight: 300; margin-bottom: 10px;">Halo, <strong>{{ auth()->user()->name }}</strong>!</h2>
-        <p style="color: #666; font-size: 15px;">Selamat datang di Sistem Rekomendasi Kost Mahasiswa Berbasis Web. Anda dapat mengisi preferensi kriteria kost Anda untuk mendapatkan hasil rekomendasi kost dengan nilai kemiripan tertinggi menggunakan algoritma Content-Based Filtering.</p>
+        <p style="color: #666; font-size: 15px;">Selamat datang di Sistem Rekomendasi Kost Penghuni Berbasis Web. Anda dapat mengisi preferensi kriteria kost Anda untuk mendapatkan hasil rekomendasi kost dengan nilai kemiripan tertinggi menggunakan algoritma Content-Based Filtering.</p>
     </div>
 </div>
 

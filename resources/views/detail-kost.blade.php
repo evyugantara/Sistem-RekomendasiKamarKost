@@ -8,9 +8,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Leaflet.js -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLEo=" crossorigin=""></script>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}"></script>
 
     <!-- Custom Style CSS -->
     <link rel="stylesheet" href="{{ asset('css/dashboard-style.css') }}?v={{ time() }}">
@@ -357,7 +356,7 @@
     <!-- Navbar -->
     <nav class="guest-navbar">
         <div class="brand">
-            <i class="fa-solid fa-house-laptop" style="color:#3c8dbc;"></i> KOST MAHASISWA CBF
+            <i class="fa-solid fa-house-laptop" style="color:#3c8dbc;"></i> RUMAH KOST CBF
         </div>
         <div class="nav-links">
             <a href="{{ route('home') }}"><i class="fa-solid fa-arrow-left"></i> Beranda</a>
@@ -551,7 +550,7 @@
                                 <div class="btn-disabled"><i class="fa-solid fa-ban"></i> Pilih kamar terlebih dahulu</div>
                             @endif
                         @else
-                            <div class="btn-disabled"><i class="fa-brands fa-whatsapp"></i> Kontak hanya untuk Mahasiswa</div>
+                            <div class="btn-disabled"><i class="fa-brands fa-whatsapp"></i> Kontak hanya untuk Penghuni</div>
                         @endif
                     @else
                         <a href="{{ route('login') }}" class="btn-wa">
@@ -645,42 +644,66 @@
             var dist = haversine(kostLat, kostLng, campusLat, campusLng);
             document.getElementById('distanceText').innerText = dist.toFixed(2) + ' km';
 
-            var map = L.map('kostMap').setView(
-                [(kostLat + campusLat) / 2, (kostLng + campusLng) / 2], 14
-            );
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                maxZoom: 19
-            }).addTo(map);
-
-            var blueIcon = L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-                iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34]
-            });
-            var redIcon = L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-                iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34]
+            var map = new google.maps.Map(document.getElementById('kostMap'), {
+                center: { lat: (kostLat + campusLat) / 2, lng: (kostLng + campusLng) / 2 },
+                zoom: 14,
+                mapTypeControl: true,
+                streetViewControl: false
             });
 
-            L.marker([kostLat, kostLng], { icon: blueIcon })
-                .addTo(map)
-                .bindPopup('<strong>🏠 {{ $kost->name }}</strong><br><em style="color:#64748b;">{{ $kost->address }}</em>')
-                .openPopup();
+            var kostMarker = new google.maps.Marker({
+                position: { lat: kostLat, lng: kostLng },
+                map: map,
+                title: "{{ $kost->name }}",
+                icon: {
+                    url: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+                    scaledSize: new google.maps.Size(25, 41),
+                    anchor: new google.maps.Point(12, 41)
+                }
+            });
 
-            L.marker([campusLat, campusLng], { icon: redIcon })
-                .addTo(map)
-                .bindPopup('<strong>🎓 ' + campusName + '</strong><br><span style="color:#3c8dbc; font-weight:600;">Jarak: ' + dist.toFixed(2) + ' km</span>');
+            var kostInfoWindow = new google.maps.InfoWindow({
+                content: '<strong>🏠 {{ $kost->name }}</strong><br><span style="color:#64748b; font-size:12px;">{{ $kost->address }}</span>'
+            });
+            kostMarker.addListener('click', function() {
+                kostInfoWindow.open(map, kostMarker);
+            });
+            kostInfoWindow.open(map, kostMarker);
 
-            L.polyline([[kostLat, kostLng], [campusLat, campusLng]], {
-                color: '#3c8dbc', weight: 3, opacity: 0.7, dashArray: '6, 8'
-            }).addTo(map);
+            var campusMarker = new google.maps.Marker({
+                position: { lat: campusLat, lng: campusLng },
+                map: map,
+                title: campusName,
+                icon: {
+                    url: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                    scaledSize: new google.maps.Size(25, 41),
+                    anchor: new google.maps.Point(12, 41)
+                }
+            });
 
-            map.fitBounds([[kostLat, kostLng], [campusLat, campusLng]], { padding: [40, 40] });
+            var campusInfoWindow = new google.maps.InfoWindow({
+                content: '<strong>🎓 ' + campusName + '</strong><br><span style="color:#3c8dbc; font-weight:600;">Jarak: ' + dist.toFixed(2) + ' km</span>'
+            });
+            campusMarker.addListener('click', function() {
+                campusInfoWindow.open(map, campusMarker);
+            });
+
+            var polyline = new google.maps.Polyline({
+                path: [
+                    { lat: kostLat, lng: kostLng },
+                    { lat: campusLat, lng: campusLng }
+                ],
+                strokeColor: '#3c8dbc',
+                strokeOpacity: 0.8,
+                strokeWeight: 3,
+                map: map
+            });
+
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(new google.maps.LatLng(kostLat, kostLng));
+            bounds.extend(new google.maps.LatLng(campusLat, campusLng));
+            map.fitBounds(bounds);
         });
-
-
     </script>
 </body>
 </html>

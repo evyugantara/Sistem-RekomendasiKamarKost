@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda - Sistem Rekomendasi Kost Mahasiswa</title>
+    <title>Beranda - Sistem Rekomendasi Kost Penghuni</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,7 +16,7 @@
     <!-- Header Guest Nav -->
     <nav class="guest-navbar">
         <div class="brand">
-            <i class="fa-solid fa-house-laptop" style="color: #3c8dbc;"></i> KOST MAHASISWA CBF
+            <i class="fa-solid fa-house-laptop" style="color: #3c8dbc;"></i> RUMAH KOST CBF
         </div>
         <div class="nav-links">
             <a href="{{ route('home') }}">Beranda</a>
@@ -26,7 +26,7 @@
                 @elseif(auth()->user()->role === 'pengelola')
                     <a href="{{ route('pengelola.dashboard') }}" class="btn-custom btn-success-custom" style="color: #fff;">Dashboard Pengelola</a>
                 @else
-                    <a href="{{ route('mahasiswa.dashboard') }}" class="btn-custom btn-primary-custom" style="color: #fff;">Dashboard Mahasiswa</a>
+                    <a href="{{ route('mahasiswa.dashboard') }}" class="btn-custom btn-primary-custom" style="color: #fff;">Dashboard Penghuni</a>
                 @endif
             @else
                 <a href="{{ route('login') }}">Masuk</a>
@@ -34,11 +34,11 @@
             @endauth
         </div>
     </nav>
-
+ 
     <!-- Hero Section -->
     <header class="hero-section">
-        <h1>Temukan Kost Mahasiswa Sesuai Preferensi Anda</h1>
-        <p>Sistem pencarian dan rekomendasi kost berbasis web menggunakan metode **Content-Based Filtering** untuk membantu mahasiswa menemukan kost terbaik di sekitar kampus secara mudah dan cepat.</p>
+        <h1>Temukan Kost Terbaik Sesuai Preferensi Anda</h1>
+        <p>Gunakan Sistem pencarian dan rekomendasi kost dengan menggunakan metode Content-Based Filtering untuk membantu Anda menemukan kost terbaik di sekitar kampus secara mudah dan cepat.</p>
         @guest
             <a href="{{ route('register') }}" class="btn-custom btn-primary-custom" style="font-size: 16px; padding: 10px 20px; font-weight: bold;">Dapatkan Rekomendasi Kost Sekarang</a>
         @else

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Log Aktivitas CBF')
-@section('header-title', 'Log Riwayat Rekomendasi Mahasiswa')
+@section('header-title', 'Log Riwayat Rekomendasi Penghuni')
 @section('breadcrumb-active', 'Log Aktivitas')
 
 @section('styles')
@@ -50,7 +50,7 @@
 
     <div class="box-body">
         <p style="color: #666; font-size: 13.5px; margin-bottom: 18px;">
-            Daftar ini mencatat setiap kali Mahasiswa menekan tombol <strong>"Cari Rekomendasi Kost"</strong>. Berguna untuk memantau preferensi yang sering dicari oleh mahasiswa di sekitar kampus.
+            Daftar ini mencatat setiap kali Penghuni menekan tombol <strong>"Cari Rekomendasi Kost"</strong>. Berguna untuk memantau preferensi yang sering dicari oleh penghuni di sekitar kampus.
         </p>
 
         <div class="table-responsive">
@@ -58,7 +58,7 @@
                 <thead>
                     <tr>
                         <th style="width: 40px; text-align:center;">No</th>
-                        <th style="width: 200px;">Mahasiswa</th>
+                        <th style="width: 200px;">Penghuni</th>
                         <th>Preferensi yang Dicari</th>
                         <th style="width: 110px; text-align: center;">Kost Cocok</th>
                         <th style="width: 120px;">Waktu</th>
